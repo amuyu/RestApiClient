@@ -1,8 +1,12 @@
 package com.lazycouple.restapiclient;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +17,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.lazycouple.restapiclient.ui.RestRequestFragment;
+import com.lazycouple.restapiclient.util.Logger;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +49,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if(savedInstanceState == null)
+            selectItem(R.id.nav_camera);
     }
 
     @Override
@@ -94,8 +106,46 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+        selectItem(id);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * main 화면 변경
+     * @param id
+     */
+    private void selectItem(int id)
+    {
+        Logger.d(TAG, "selectItem#id:"+id);
+        Fragment fragment = null;
+
+        switch (id)
+        {
+            case R.id.nav_camera:
+                fragment = requestMainFragment();
+                break;
+        }
+
+        if(fragment != null)
+        {
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_frame, fragment);
+            fragmentTransaction.commit();
+        }
+    }
+
+    /**
+     * RequestMain Fragment 호출
+     * @return
+     */
+    private Fragment requestMainFragment()
+    {
+        Logger.d(TAG, "requestMainFragment");
+        Fragment fragment = RestRequestFragment.newInstance();
+        return fragment;
     }
 }
