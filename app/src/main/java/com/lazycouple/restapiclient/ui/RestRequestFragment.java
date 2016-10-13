@@ -55,6 +55,7 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
 
 
     ReqParamAdapter paramAdapter;
+    String historyName = null;
 
     public static Fragment newInstance() {
         Fragment fragment = new RestRequestFragment();
@@ -75,8 +76,6 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
         super.onActivityCreated(savedInstanceState);
 
         restRequestPresenter.init();
-
-
 
         paramAdapter = new ReqParamAdapter(getActivity());
         rv_parameters.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -111,19 +110,29 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
         restRequestPresenter.requestRestApi(et_input_url.getText().toString(), paramAdapter.getItems());
     }
 
+    public void setHistoryName(String historyName) {
+        this.historyName = historyName;
+    }
+
     @Override
     public void initView() {
         // BasicConsts.SKP_URL
         String url = "http://";
 
-        List<Parameter> params = ConfigProperties.getApiInfo(getActivity(), "versionCheck");
-        for(Parameter param : params)
+        if(historyName != null)
         {
-            if(!param.getKey().equals("url"))
-                addParam(param);
-            else
-                url = param.getValue();
+            List<Parameter> params = ConfigProperties.getApiInfo(getActivity(), historyName);
+            for(Parameter param : params)
+            {
+                if(!param.getKey().equals("url"))
+                    addParam(param);
+                else
+                    url = param.getValue();
+            }
         }
+        else
+            addParam(new Parameter("",""));
+
 
         tv_input_method.setText("POST");
         et_input_url.setText(url);

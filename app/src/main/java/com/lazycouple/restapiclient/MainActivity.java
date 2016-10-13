@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.lazycouple.restapiclient.ui.RequestHistoryFragment;
 import com.lazycouple.restapiclient.ui.RestRequestFragment;
 import com.lazycouple.restapiclient.util.Logger;
 
@@ -139,28 +140,33 @@ public class MainActivity extends AppCompatActivity
         switch (id)
         {
             case R.id.nav_camera:
-                fragment = requestMainFragment();
+                fragment = RestRequestFragment.newInstance();
+                break;
+            case R.id.nav_gallery:
+                fragment = RequestHistoryFragment.newInstance();
                 break;
         }
 
         if(fragment != null)
         {
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.content_frame, fragment);
-            fragmentTransaction.commit();
+            switchFragment(fragment);
         }
     }
 
-    /**
-     * RequestMain Fragment 호출
-     * @return
-     */
-    private Fragment requestMainFragment()
+    private void switchFragment(Fragment fragment)
     {
-        Logger.d(TAG, "requestMainFragment");
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_frame, fragment);
+        fragmentTransaction.commit();
+    }
+
+
+    public void loadHistoryFragment(String historyName)
+    {
         Fragment fragment = RestRequestFragment.newInstance();
-        return fragment;
+        ((RestRequestFragment)fragment).setHistoryName(historyName);
+        switchFragment(fragment);
     }
 
 

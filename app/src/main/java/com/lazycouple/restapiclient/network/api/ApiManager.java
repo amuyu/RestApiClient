@@ -66,12 +66,7 @@ public class ApiManager {
     }
 
     public Observable<Response<ResponseBody>> callApi(String url, Map<String,String> map ) {
-
         Logger.d(TAG, "url:" + url);
-        Logger.d(TAG, "base:" + Utils.getBaseUrl(url));
-        Logger.d(TAG, "path:" + Utils.getPath(url));
-        Logger.d(TAG, "version:" + map.get("version"));
-
         RestApiService restApiService = getRetrofit(Utils.getBaseUrl(url))
                 .create(RestApiService.class);
         return restApiService.callApi(Utils.getPath(url), map)
