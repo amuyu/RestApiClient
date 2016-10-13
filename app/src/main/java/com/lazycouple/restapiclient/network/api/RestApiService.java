@@ -1,6 +1,9 @@
 package com.lazycouple.restapiclient.network.api;
 
+import com.lazycouple.restapiclient.network.api.response.RepositoryResponse;
 import com.lazycouple.restapiclient.network.api.response.UserResponse;
+
+import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -11,8 +14,13 @@ import rx.Observable;
  */
 public interface RestApiService {
 
-    @GET("/usrs/{username}")
+    @GET("/users/{username}")
     Observable<UserResponse> getUser(
+            @Path("username") String username
+    );
+
+    @GET("/users/{username}/repos")
+    Observable<List<RepositoryResponse>> getUsersRepositories(
             @Path("username") String username
     );
 }

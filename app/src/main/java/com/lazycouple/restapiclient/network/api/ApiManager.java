@@ -1,7 +1,10 @@
 package com.lazycouple.restapiclient.network.api;
 
+import com.lazycouple.restapiclient.network.api.response.RepositoryResponse;
 import com.lazycouple.restapiclient.ui.data.User;
 import com.lazycouple.restapiclient.util.Logger;
+
+import java.util.List;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,4 +36,14 @@ public class ApiManager {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Observable<RepositoryResponse> getUsersRepositories(String username) {
+        return restApiService.getUsersRepositories(username)
+                .flatMap(repos-> Observable.from(repos))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
+
 }

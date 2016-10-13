@@ -13,5 +13,6 @@ public interface RestRequestContract {
 
     interface Presenter extends BasePresenter {
         void init();
+        void loadList();
     }
 }
