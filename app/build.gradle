@@ -39,6 +39,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.android.support:design:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
 
     // butterknife
     compile 'com.jakewharton:butterknife:8.4.0'

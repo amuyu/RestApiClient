@@ -1,11 +1,24 @@
 package com.lazycouple.restapiclient.network.api;
 
+import android.net.Uri;
+
 import com.lazycouple.restapiclient.network.api.response.RepositoryResponse;
+import com.lazycouple.restapiclient.network.api.response.UserResponse;
+import com.lazycouple.restapiclient.ui.data.Parameter;
 import com.lazycouple.restapiclient.ui.data.User;
 import com.lazycouple.restapiclient.util.Logger;
+import com.lazycouple.restapiclient.util.Utils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -45,5 +58,33 @@ public class ApiManager {
 
     }
 
+    public Observable<Response<ResponseBody>> getUserResponse(String username) {
+        Logger.d(TAG, "ApiManager#getUser");
+        return restApiService.getUserResponse(username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Response<ResponseBody>> callApi(String url, Map<String,String> map ) {
+
+        Logger.d(TAG, "url:" + url);
+        Logger.d(TAG, "base:" + Utils.getBaseUrl(url));
+        Logger.d(TAG, "path:" + Utils.getPath(url));
+        Logger.d(TAG, "version:" + map.get("version"));
+
+        RestApiService restApiService = getRetrofit(Utils.getBaseUrl(url))
+                .create(RestApiService.class);
+        return restApiService.callApi(Utils.getPath(url), map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private Retrofit getRetrofit(String baseUrl) {
+        return new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+    }
 
 }

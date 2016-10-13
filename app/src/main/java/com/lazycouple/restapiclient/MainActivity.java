@@ -60,8 +60,22 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(processBackPressed())
+                super.onBackPressed();
         }
+    }
+
+    private boolean processBackPressed()
+    {
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.content_frame);
+
+        if(fragment instanceof RestRequestFragment)
+        {
+            return ((RestRequestFragment) fragment).onBackPressed();
+        }
+
+        return true;
     }
 
     @Override
@@ -148,4 +162,6 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = RestRequestFragment.newInstance();
         return fragment;
     }
+
+
 }

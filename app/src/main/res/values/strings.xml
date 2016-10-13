@@ -5,4 +5,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string-array name="versionCheck">
+        <item>url|http://54.92.43.68:8080/safenumber/v2/app/check</item>
+        <item>device_type|0</item>
+        <item>version|1.0.0</item>
+        <item>os_version|4.2.2</item>
+    </string-array>
 </resources>
