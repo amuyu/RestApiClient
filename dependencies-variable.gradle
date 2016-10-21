@@ -1,0 +1,22 @@
+
+ext {
+    buildToolsVersion = "22.0.1"
+    supportLibVersion = "22.2.1"
+    retrofit = "2.1.0"
+    rxandroid_version = "1.2.1"
+}
+
+ext.dependencies = [
+
+    classpath: [
+            android     : "com.android.tools.build:gradle:2.1.2",
+            android_apt : "com.neenbedankt.gradle.plugins:android-apt:1.8",
+            retrolambda : "me.tatarka:gradle-retrolambda:3.2.2",
+    ],
+    library : [
+            retrofit2           : "com.squareup.retrofit2:retrofit:$ext.retrofit",
+            retrofit2_gson      : "com.squareup.retrofit2:converter-gson:$ext.retrofit",
+            retrofit2_rxjava2   : "com.squareup.retrofit2:adapter-rxjava:$ext.retrofit",
+    ]
+
+]

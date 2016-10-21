@@ -42,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="http://"
+                android:inputType="textUri"
                 android:textSize="20sp" />
 
         </LinearLayout>

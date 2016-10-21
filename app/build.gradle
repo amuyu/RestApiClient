@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'android-apt'
 
+
 def major = 0
 def minor = 1
 def revision = 2
@@ -12,7 +13,7 @@ def appVersionName = "$major.$minor.$revision"
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         applicationId "com.lazycouple.restapiclient"
@@ -20,6 +21,8 @@ android {
         targetSdkVersion 22
         versionCode appVersionCode
         versionName appVersionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -32,30 +35,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:design:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
-    compile 'com.android.support:cardview-v7:22.2.1'
 
-    // butterknife
-    compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
-
-    // Dagger2
-    compile 'com.google.dagger:dagger:2.0.1'
-    apt 'com.google.dagger:dagger-compiler:2.0.1'
-    provided 'org.glassfish:javax.annotation:10.0-b28'
-
-    // Retrofit2
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-
-    // rxjava
-    compile 'io.reactivex:rxandroid:1.2.1'
+configurations.all {
+    resolutionStrategy {
+        force 'com.android.support:support-annotations:23.1.1'
+    }
 }
+
