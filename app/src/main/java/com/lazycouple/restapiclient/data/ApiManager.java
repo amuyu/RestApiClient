@@ -1,20 +1,14 @@
-package com.lazycouple.restapiclient.network.api;
+package com.lazycouple.restapiclient.data;
 
-import android.net.Uri;
-
+import com.lazycouple.restapiclient.network.api.RestApiService;
 import com.lazycouple.restapiclient.network.api.response.RepositoryResponse;
-import com.lazycouple.restapiclient.network.api.response.UserResponse;
-import com.lazycouple.restapiclient.ui.data.Parameter;
 import com.lazycouple.restapiclient.ui.data.User;
 import com.lazycouple.restapiclient.util.Logger;
 import com.lazycouple.restapiclient.util.Utils;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -35,7 +29,6 @@ public class ApiManager {
     }
 
     public Observable<User> getUser(String username) {
-        Logger.d(TAG, "ApiManager#getUser");
         return restApiService.getUser(username)
                 .map(userResponse -> {
                     Logger.d(TAG, Thread.currentThread().getName() + "#ApiManager#map");
@@ -59,14 +52,13 @@ public class ApiManager {
     }
 
     public Observable<Response<ResponseBody>> getUserResponse(String username) {
-        Logger.d(TAG, "ApiManager#getUser");
         return restApiService.getUserResponse(username)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+
     public Observable<Response<ResponseBody>> callApi(String url, Map<String,String> map ) {
-        Logger.d(TAG, "url:" + url);
         RestApiService restApiService = getRetrofit(Utils.getBaseUrl(url))
                 .create(RestApiService.class);
         return restApiService.callApi(Utils.getPath(url), map)

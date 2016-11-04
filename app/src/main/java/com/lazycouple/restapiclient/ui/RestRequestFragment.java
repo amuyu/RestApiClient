@@ -18,6 +18,7 @@ import com.lazycouple.restapiclient.consts.BasicConsts;
 import com.lazycouple.restapiclient.ui.adapter.ReqParamAdapter;
 import com.lazycouple.restapiclient.ui.component.DaggerRestRequestComponent;
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract;
+import com.lazycouple.restapiclient.ui.data.CustomResponse;
 import com.lazycouple.restapiclient.ui.data.Parameter;
 import com.lazycouple.restapiclient.ui.module.RestRequestModule;
 import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter;
@@ -74,15 +75,16 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Logger.d(TAG, "onActivityCreated");
 
-        restRequestPresenter.init();
 
         paramAdapter = new ReqParamAdapter(getActivity());
         rv_parameters.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_parameters.setAdapter(paramAdapter);
 
 
-        initView();
+        restRequestPresenter.init();
+
     }
 
     @Nullable
@@ -117,7 +119,7 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
     @Override
     public void initView() {
         // BasicConsts.SKP_URL
-        String url = "http://";
+        String url = "http://api.github.com/users/amuyu";
 
         if(historyName != null)
         {
@@ -133,7 +135,7 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
         else
             addParam(new Parameter("",""));
 
-
+        Logger.d(TAG, "initView#url:"+url);
         tv_input_method.setText("POST");
         et_input_url.setText(url);
     }
@@ -145,28 +147,25 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
     }
 
     @Override
-    public void showResponse(Response<ResponseBody> response) {
-        tv_response_code.setText(String.valueOf(response.code()));
+    public void showResponse(CustomResponse response) {
+        tv_response_code.setText(String.valueOf(response.code));
 
         String body = "";
-        if(response.code() == 200)
+        if(response.code == 200)
         {
-            try {
-                body = response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            body = response.body;
         }
         else
         {
-            try {
-                body = response.errorBody().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            body = response.errorbody;
         }
 
         tv_response_body.setText(body);
+
+    }
+
+    @Override
+    public void showError() {
 
     }
 }

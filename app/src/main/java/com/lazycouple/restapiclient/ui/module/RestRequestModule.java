@@ -1,7 +1,9 @@
 package com.lazycouple.restapiclient.ui.module;
 
+import com.lazycouple.restapiclient.data.DataManager;
+import com.lazycouple.restapiclient.data.DataManagerImpl;
 import com.lazycouple.restapiclient.network.ApiModule;
-import com.lazycouple.restapiclient.network.api.ApiManager;
+import com.lazycouple.restapiclient.data.ApiManager;
 import com.lazycouple.restapiclient.network.api.RestApiService;
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract;
 import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter;
@@ -31,6 +33,12 @@ public class RestRequestModule {
     public ApiManager provideApiManager(RestApiService restApiService) {
         return new ApiManager(restApiService);
     }
+
+    @Provides
+    public DataManager provideDataManager(ApiManager manager) {
+        return new DataManagerImpl(manager);
+    }
+
 
     @Provides
     public RestRequestContract.View provideView() {
