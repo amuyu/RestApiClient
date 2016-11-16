@@ -8,7 +8,10 @@ import com.lazycouple.restapiclient.util.Utils;
 
 import java.util.Map;
 
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -66,11 +69,25 @@ public class ApiManager {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Observable<Response<ResponseBody>> callApiPost(String url, RequestBody body) {
+        RestApiService restApiService = getRetrofit(Utils.getBaseUrl(url))
+                .create(RestApiService.class);
+        return restApiService.callApiPost(Utils.getPath(url), body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     private Retrofit getRetrofit(String baseUrl) {
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        httpClient.addInterceptor(loggingInterceptor);
+
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .client(httpClient.build())
                 .build();
     }
 

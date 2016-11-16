@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.RequestBody;
+
 /**
  * Created by noco on 2016-10-13.
  */
@@ -25,5 +27,15 @@ public class Utils {
         Map<String, String> map = new HashMap<>();
         for (Parameter param : params) map.put(param.getKey(), param.getValue());
         return map;
+    }
+
+    public static RequestBody bodyParameters(List<Parameter> params) {
+        OkHttpFormBuilder bodybuilder = new OkHttpFormBuilder();
+
+        for (Parameter param : params) {
+            bodybuilder.add(param.getKey(), param.getValue());
+        }
+
+        return bodybuilder.build();
     }
 }

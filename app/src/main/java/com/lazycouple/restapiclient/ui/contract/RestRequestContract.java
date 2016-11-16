@@ -3,6 +3,7 @@ package com.lazycouple.restapiclient.ui.contract;
 import com.lazycouple.restapiclient.ui.data.CustomResponse;
 import com.lazycouple.restapiclient.ui.data.Parameter;
 import com.lazycouple.restapiclient.ui.presenter.BasePresenter;
+import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter;
 
 import java.util.List;
 
@@ -19,10 +20,15 @@ public interface RestRequestContract {
         void addParam(Parameter param);
         void showResponse(CustomResponse responseBody);
         void showError();
+
+        void setMethod(String method);
     }
 
     interface Presenter extends BasePresenter {
         void init();
         void requestRestApi(String url, List<Parameter> parameters);
+
+        RestRequestPresenter.Method getMethod();
+        void setMethod(RestRequestPresenter.Method method);
     }
 }

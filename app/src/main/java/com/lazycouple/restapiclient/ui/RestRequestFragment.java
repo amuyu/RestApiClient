@@ -105,11 +105,32 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
         return false;
     }
 
-    @OnClick(R.id.bt_send)
-    public void onSendClick() {
+    @OnClick({R.id.bt_send, R.id.tv_input_method})
+    public void onClick(View view) {
 
+        switch (view.getId()) {
+            case R.id.bt_send:
+                sendRequest();
+                break;
+            case R.id.tv_input_method:
+                changeMethod();
+                break;
+        }
+
+
+    }
+
+    private void sendRequest() {
         ll_requset.setVisibility(View.GONE);
         restRequestPresenter.requestRestApi(et_input_url.getText().toString(), paramAdapter.getItems());
+    }
+
+    private void changeMethod() {
+        String method = tv_input_method.getText().toString();
+        if(method.equals(RestRequestPresenter.Method.GET.name()))
+            restRequestPresenter.setMethod(RestRequestPresenter.Method.POST);
+        else if(method.equals(RestRequestPresenter.Method.POST.name()))
+            restRequestPresenter.setMethod(RestRequestPresenter.Method.GET);
     }
 
     public void setHistoryName(String historyName) {
@@ -119,7 +140,8 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
     @Override
     public void initView() {
         // BasicConsts.SKP_URL
-        String url = "http://api.github.com/users/amuyu";
+//        String url = "http://54.92.43.68:8080/safenumber/v2/svc/opt";
+        String url = "http://54.92.43.68:8180/safenumber/v3/default/svc/token";
 
         if(historyName != null)
         {
@@ -133,10 +155,16 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
             }
         }
         else
-            addParam(new Parameter("",""));
+        {
+            addParam(new Parameter("cpn","01058557235"));
+            addParam(new Parameter("user_token","0f7094d5-09e3-40ef-93da-b41d79015db6"));
+            addParam(new Parameter("device_type","2"));
+            addParam(new Parameter("push_token","dr6qEYf69HM:APA91bFuy8eg59Jdi7w23T1eeOZ36HOkDgbndm8OCf9ChI_yYPGwnxLjkHfx5sTStYVlAlYKi647NWyH7X9R-gPWbW_sDA3W63jvaMBkxnagkd6m9L-7CJtehPxnULNGCXujnoL6CiJz"));
+        }
+
 
         Logger.d(TAG, "initView#url:"+url);
-        tv_input_method.setText("POST");
+//        tv_input_method.setText("POST");
         et_input_url.setText(url);
     }
 
@@ -167,5 +195,10 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
     @Override
     public void showError() {
 
+    }
+
+    @Override
+    public void setMethod(String method) {
+        tv_input_method.setText(method);
     }
 }

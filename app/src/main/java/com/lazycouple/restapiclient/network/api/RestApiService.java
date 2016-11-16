@@ -7,9 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
@@ -38,5 +41,10 @@ public interface RestApiService {
     @GET
     Observable<Response<ResponseBody>> callApi(
             @Url String path, @QueryMap Map<String,String> options
+    );
+
+    @POST
+    Observable<Response<ResponseBody>> callApiPost(
+            @Url String path, @Body RequestBody body
     );
 }
