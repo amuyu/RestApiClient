@@ -2,17 +2,19 @@
 
 
 buildscript {
-
-    apply from : 'dependencies-variable.gradle'
-    apply from : 'dependencies-classpath.gradle'
-
     repositories {
         jcenter()
     }
 
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.2'
+    }
+
 }
 
-apply from: 'dependencies-app.gradle'
+
 
 allprojects {
     repositories {
@@ -23,3 +25,6 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+apply from : 'dependencies-variable.gradle'
+apply from : 'dependencies-app.gradle'

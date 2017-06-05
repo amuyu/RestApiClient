@@ -2,50 +2,44 @@ rootProject.allprojects { project ->
     if (project.name == 'app') {
 
         project.afterEvaluate {
-            repositories {
-                jcenter()
-                maven {
-                    url 'https://dl.bintray.com/amuyu/maven'
-                }
-            }
 
             dependencies {
                 compile fileTree(dir: 'libs', include: ['*.jar'])
 
-                testCompile 'junit:junit:4.12'
-                compile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion;
-                compile 'com.android.support:design:' + rootProject.ext.supportLibVersion;
-                compile 'com.android.support:recyclerview-v7:' + rootProject.ext.supportLibVersion;
-                compile 'com.android.support:cardview-v7:' + rootProject.ext.supportLibVersion;
+                testCompile deps.junit
+                compile deps.appcompat;
+                compile deps.design;
+                compile deps.recyclerview;
+                compile deps.cardview;
 
                 // butterknife
                 compile 'com.jakewharton:butterknife:8.4.0'
                 apt 'com.jakewharton:butterknife-compiler:8.4.0'
 
                 // Dagger2
-                compile 'com.google.dagger:dagger:2.0.1'
-                apt 'com.google.dagger:dagger-compiler:2.0.1'
-                provided 'org.glassfish:javax.annotation:10.0-b28'
+                compile deps.dagger
+                apt deps.dagger_compiler
+                provided deps.annotation
 
 
                 // rxjava
-                compile 'io.reactivex:rxandroid:' + rootProject.ext.rxandroid_version;
+                compile deps.rxandroid;
 
                 // Retrofit2
-                compile rootProject.ext.dependencies.library.retrofit2
-                compile rootProject.ext.dependencies.library.retrofit2_gson
-                compile rootProject.ext.dependencies.library.retrofit2_rxjava2
-                compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+                compile deps.retrofit2
+                compile deps.retrofit2_gson
+                compile deps.retrofit2_rxjava2
+                compile deps.okhttp_log_interceptor
 
                 // Logger
-                compile 'com.amuyu:logger:1.0.7'
+                compile deps.logger
 
                 // androidTestCompile 'org.mockito:mockito-core:1.10.19'
-                androidTestCompile 'com.android.support:support-annotations:' + rootProject.ext.supportLibVersion;
-                androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-                androidTestCompile 'com.android.support.test:runner:0.5'
-                androidTestCompile "com.crittercism.dexmaker:dexmaker-mockito:1.4"
-                androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:1.4"
+                androidTestCompile deps.support_annotation
+                androidTestCompile deps.espresso_core
+                androidTestCompile deps.test_runner
+                androidTestCompile deps.mockito
+                androidTestCompile deps.dx
 
 
 

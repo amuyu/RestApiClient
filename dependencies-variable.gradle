@@ -2,21 +2,37 @@
 ext {
     buildToolsVersion = "22.0.1"
     supportLibVersion = "22.2.1"
+
+    espresso = "2.2.2"
     retrofit = "2.1.0"
     rxandroid_version = "1.2.1"
+    dagger = "2.0.1"
+    mockito = "1.4"
 }
 
-ext.dependencies = [
+ext.deps = [
+    junit               : 'junit:junit:4.12',
+    test_runner         : 'com.android.support.test:runner:0.5',
+    support_annotation  : "com.android.support:support-annotations:$ext.supportLibVersion",
+    espresso_core       : "com.android.support.test.espresso:espresso-core:$ext.espresso",
+    mockito             : "com.crittercism.dexmaker:dexmaker-mockito:$ext.mockito",
+    dx                  : "com.crittercism.dexmaker:dexmaker-dx:$ext.mockito",
 
-    classpath: [
-            android     : "com.android.tools.build:gradle:2.1.2",
-            android_apt : "com.neenbedankt.gradle.plugins:android-apt:1.8",
-            retrolambda : "me.tatarka:gradle-retrolambda:3.2.2",
-    ],
-    library : [
-            retrofit2           : "com.squareup.retrofit2:retrofit:$ext.retrofit",
-            retrofit2_gson      : "com.squareup.retrofit2:converter-gson:$ext.retrofit",
-            retrofit2_rxjava2   : "com.squareup.retrofit2:adapter-rxjava:$ext.retrofit",
-    ]
+    appcompat           : "com.android.support:appcompat-v7:$ext.supportLibVersion",
+    design              : "com.android.support:design:$ext.supportLibVersion",
+    recyclerview        : "com.android.support:recyclerview-v7:$ext.supportLibVersion",
+    cardview            : "com.android.support:cardview-v7:$ext.supportLibVersion",
 
+    retrofit2           : "com.squareup.retrofit2:retrofit:$ext.retrofit",
+    retrofit2_gson      : "com.squareup.retrofit2:converter-gson:$ext.retrofit",
+    retrofit2_rxjava2   : "com.squareup.retrofit2:adapter-rxjava:$ext.retrofit",
+    okhttp_log_interceptor   : 'com.squareup.okhttp3:logging-interceptor:3.3.1',
+
+    dagger              : "com.google.dagger:dagger:$ext.dagger",
+    dagger_compiler     : "com.google.dagger:dagger-compiler:$ext.dagger",
+    annotation          : "org.glassfish:javax.annotation:10.0-b28",
+
+    rxandroid           : "io.reactivex:rxandroid:$ext.rxandroid_version",
+
+    logger : 'com.amuyu:logger:1.0.7'
 ]
