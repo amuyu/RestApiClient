@@ -1,9 +1,9 @@
 package com.lazycouple.restapiclient.data;
 
+import com.amuyu.logger.Logger;
 import com.lazycouple.restapiclient.network.api.RestApiService;
 import com.lazycouple.restapiclient.network.api.response.RepositoryResponse;
 import com.lazycouple.restapiclient.ui.data.User;
-import com.lazycouple.restapiclient.util.Logger;
 import com.lazycouple.restapiclient.util.Utils;
 
 import java.util.Map;
@@ -34,7 +34,7 @@ public class ApiManager {
     public Observable<User> getUser(String username) {
         return restApiService.getUser(username)
                 .map(userResponse -> {
-                    Logger.d(TAG, Thread.currentThread().getName() + "#ApiManager#map");
+                    Logger.d("");
                     User user = new User();
                     user.login = userResponse.login;
                     user.id = userResponse.id;

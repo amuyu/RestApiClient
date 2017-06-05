@@ -4,6 +4,9 @@ rootProject.allprojects { project ->
         project.afterEvaluate {
             repositories {
                 jcenter()
+                maven {
+                    url 'https://dl.bintray.com/amuyu/maven'
+                }
             }
 
             dependencies {
@@ -33,6 +36,9 @@ rootProject.allprojects { project ->
                 compile rootProject.ext.dependencies.library.retrofit2_gson
                 compile rootProject.ext.dependencies.library.retrofit2_rxjava2
                 compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+
+                // Logger
+                compile 'com.amuyu:logger:1.0.7'
 
                 // androidTestCompile 'org.mockito:mockito-core:1.10.19'
                 androidTestCompile 'com.android.support:support-annotations:' + rootProject.ext.supportLibVersion;

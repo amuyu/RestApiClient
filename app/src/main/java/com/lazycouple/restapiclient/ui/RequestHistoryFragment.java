@@ -6,11 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.amuyu.logger.Logger;
 import com.lazycouple.restapiclient.MainActivity;
 import com.lazycouple.restapiclient.R;
 import com.lazycouple.restapiclient.ui.adapter.ReqHistoryAdapter;
@@ -19,7 +19,6 @@ import com.lazycouple.restapiclient.ui.contract.RequestHistoryContract;
 import com.lazycouple.restapiclient.ui.module.RequestHistoryModule;
 import com.lazycouple.restapiclient.ui.presenter.RequestHistoryPresenter;
 import com.lazycouple.restapiclient.util.ConfigProperties;
-import com.lazycouple.restapiclient.util.Logger;
 
 import java.util.List;
 
@@ -71,7 +70,7 @@ public class RequestHistoryFragment extends Fragment implements RequestHistoryCo
             @Override
             public void onRefresh() {
                 // refresh event
-                Logger.d(TAG, "refresh event");
+                Logger.d("refresh event");
 
             }
         });
@@ -101,6 +100,6 @@ public class RequestHistoryFragment extends Fragment implements RequestHistoryCo
 
     @Override
     public void showList() {
-        Logger.d(TAG, "showList");
+        Logger.d("showList");
     }
 }

@@ -2,11 +2,11 @@ package com.lazycouple.restapiclient.ui.presenter;
 
 import android.content.Context;
 
+import com.amuyu.logger.Logger;
 import com.lazycouple.restapiclient.data.DataManager;
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract;
 import com.lazycouple.restapiclient.ui.data.CustomResponse;
 import com.lazycouple.restapiclient.ui.data.Parameter;
-import com.lazycouple.restapiclient.util.Logger;
 import com.lazycouple.restapiclient.util.Utils;
 
 import java.io.IOException;
@@ -105,7 +105,7 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
                         CustomResponse customResponse = null;
                         if(response.code() == 200)
                         {
-                            Logger.d(TAG, "body : " + response.body().toString());
+                            Logger.d("body : " + response.body().toString());
 
                             try {
                                 customResponse = new CustomResponse.CustomResponseBuilder()
@@ -155,7 +155,7 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
                         CustomResponse customResponse = null;
                         if(response.code() == 200)
                         {
-                            Logger.d(TAG, "body : " + response.body().toString());
+                            Logger.d("body : " + response.body().toString());
 
                             try {
                                 customResponse = new CustomResponse.CustomResponseBuilder()

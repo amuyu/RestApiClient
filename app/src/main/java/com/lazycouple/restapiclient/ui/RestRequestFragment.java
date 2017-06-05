@@ -13,8 +13,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amuyu.logger.Logger;
 import com.lazycouple.restapiclient.R;
-import com.lazycouple.restapiclient.consts.BasicConsts;
 import com.lazycouple.restapiclient.ui.adapter.ReqParamAdapter;
 import com.lazycouple.restapiclient.ui.component.DaggerRestRequestComponent;
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract;
@@ -23,9 +23,7 @@ import com.lazycouple.restapiclient.ui.data.Parameter;
 import com.lazycouple.restapiclient.ui.module.RestRequestModule;
 import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter;
 import com.lazycouple.restapiclient.util.ConfigProperties;
-import com.lazycouple.restapiclient.util.Logger;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,9 +31,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
-import retrofit2.Response;
 
 /**
  * Created by noco on 2016-10-12.
@@ -75,7 +70,7 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Logger.d(TAG, "onActivityCreated");
+        Logger.d("");
 
 
         paramAdapter = new ReqParamAdapter(getActivity());
@@ -90,7 +85,7 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Logger.d(TAG, "onCreateView");
+        Logger.d("");
         View rootView = inflater.inflate(R.layout.request_main, container, false);
         ButterKnife.bind(this,rootView);
         return rootView;
@@ -163,7 +158,7 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
         }
 
 
-        Logger.d(TAG, "initView#url:"+url);
+        Logger.d("initView#url:"+url);
 //        tv_input_method.setText("POST");
         et_input_url.setText(url);
     }

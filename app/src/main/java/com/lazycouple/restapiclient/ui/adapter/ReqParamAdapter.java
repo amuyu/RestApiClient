@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.amuyu.logger.Logger;
 import com.lazycouple.restapiclient.R;
 import com.lazycouple.restapiclient.ui.data.Parameter;
-import com.lazycouple.restapiclient.util.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class ReqParamAdapter extends RecyclerView.Adapter<ReqParamAdapter.Parame
     private List<Parameter> parameters;
 
     public ReqParamAdapter(Context mContext) {
-        Logger.d(TAG, "ReqParamAdapter");
+        Logger.d("ReqParamAdapter");
         this.mContext = mContext;
         parameters = new ArrayList<>();
     }
@@ -45,7 +45,7 @@ public class ReqParamAdapter extends RecyclerView.Adapter<ReqParamAdapter.Parame
 
     @Override
     public ParameterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Logger.d(TAG, "onCreateViewHolder");
+        Logger.d("onCreateViewHolder");
         View v = LayoutInflater.from(mContext).inflate(R.layout.req_parameters_row, parent, false);
         ParameterHolder adapterHolder = new ParameterHolder(v);
         ButterKnife.bind(adapterHolder, v);
@@ -56,7 +56,7 @@ public class ReqParamAdapter extends RecyclerView.Adapter<ReqParamAdapter.Parame
     public void onBindViewHolder(ParameterHolder holder, int position) {
 
         Parameter param = getItem(position);
-        Logger.d(TAG, "onBindViewHolder#param:"+param.toString());
+        Logger.d("onBindViewHolder#param:"+param.toString());
 
         holder.et_param_key.setText(param.getKey());
         holder.et_param_value.setText(param.getValue());

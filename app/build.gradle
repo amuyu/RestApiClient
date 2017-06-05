@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.lazycouple.restapiclient"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 22
         versionCode appVersionCode
         versionName appVersionName
