@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         binding.navView.setNavigationItemSelectedListener(this);
 
         if(savedInstanceState == null)
-            selectItem(R.id.nav_camera);
+            selectItem(R.id.nav_request);
     }
 
     @Override
@@ -103,17 +103,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_request) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_history) {
 
         }
 
@@ -135,10 +127,10 @@ public class MainActivity extends AppCompatActivity
 
         switch (id)
         {
-            case R.id.nav_camera:
+            case R.id.nav_request:
                 fragment = RestRequestFragment.newInstance();
                 break;
-            case R.id.nav_gallery:
+            case R.id.nav_history:
                 fragment = RequestHistoryFragment.newInstance();
                 break;
         }
