@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.widget.CardView
+    <data>
+
+        <variable
+            name="title"
+            type="java.lang.String"/>
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        card_view:cardCornerRadius="4dp">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/ll_history"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            card_view:cardCornerRadius="4dp">
 
-            <TextView
-                android:id="@+id/tv_req_history_row"
+            <LinearLayout
+                android:id="@+id/ll_history"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:gravity="center_vertical"
-                android:text="Version"
-                android:textSize="20sp" />
-        </LinearLayout>
+                android:layout_height="40dp"
+                android:orientation="horizontal">
 
-    </android.support.v7.widget.CardView>
+                <TextView
+                    android:id="@+id/tv_req_history_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@{title}"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
 
 
-</LinearLayout>
+    </LinearLayout>
+</layout>
