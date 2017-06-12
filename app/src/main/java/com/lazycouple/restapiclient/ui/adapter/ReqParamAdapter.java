@@ -1,21 +1,19 @@
 package com.lazycouple.restapiclient.ui.adapter;
 
 import android.content.Context;
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.amuyu.logger.Logger;
-import com.lazycouple.restapiclient.R;
+import com.android.databinding.library.baseAdapters.BR;
+import com.lazycouple.restapiclient.databinding.ReqParametersRowBinding;
 import com.lazycouple.restapiclient.ui.data.Parameter;
+import com.lazycouple.restapiclient.util.BindingHolder;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by noco on 2016-10-13.
@@ -46,20 +44,17 @@ public class ReqParamAdapter extends RecyclerView.Adapter<ReqParamAdapter.Parame
     @Override
     public ParameterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Logger.d("onCreateViewHolder");
-        View v = LayoutInflater.from(mContext).inflate(R.layout.req_parameters_row, parent, false);
-        ParameterHolder adapterHolder = new ParameterHolder(v);
-        ButterKnife.bind(adapterHolder, v);
-        return adapterHolder;
+        ReqParametersRowBinding binding = ReqParametersRowBinding.inflate(LayoutInflater.from(mContext), parent, false);
+        return new ParameterHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(ParameterHolder holder, int position) {
 
         Parameter param = getItem(position);
+        holder.bind(param);
         Logger.d("onBindViewHolder#param:"+param.toString());
 
-        holder.et_param_key.setText(param.getKey());
-        holder.et_param_value.setText(param.getValue());
     }
 
     @Override
@@ -67,13 +62,16 @@ public class ReqParamAdapter extends RecyclerView.Adapter<ReqParamAdapter.Parame
         return parameters.size();
     }
 
-    static class ParameterHolder extends RecyclerView.ViewHolder {
+    class ParameterHolder extends BindingHolder<Parameter> {
 
-        @BindView(R.id.et_param_key) EditText et_param_key;
-        @BindView(R.id.et_param_value) EditText et_param_value;
 
-        public ParameterHolder(View itemView) {
-            super(itemView);
+        public ParameterHolder(ViewDataBinding binding) {
+            super(binding);
+        }
+
+        @Override
+        public void bind(Parameter param) {
+            binding.setVariable(BR.param, param);
         }
     }
 }
