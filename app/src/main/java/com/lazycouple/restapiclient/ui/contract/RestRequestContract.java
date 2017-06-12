@@ -22,6 +22,9 @@ public interface RestRequestContract {
         void showError();
 
         void setMethod(String method);
+
+        void sendRequest();
+        void changeMethod();
     }
 
     interface Presenter extends BasePresenter {

@@ -4,17 +4,12 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.amuyu.logger.Logger;
-import com.lazycouple.restapiclient.R;
+import com.lazycouple.restapiclient.databinding.RequestMainBinding;
 import com.lazycouple.restapiclient.ui.adapter.ReqParamAdapter;
 import com.lazycouple.restapiclient.ui.component.DaggerRestRequestComponent;
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract;
@@ -28,10 +23,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 /**
  * Created by noco on 2016-10-12.
  */
@@ -41,15 +32,7 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
     @Inject
     RestRequestPresenter restRequestPresenter;
 
-    @BindView(R.id.et_input_url) EditText et_input_url;
-    @BindView(R.id.tv_input_method) TextView tv_input_method;
-    @BindView(R.id.tv_response_code) TextView tv_response_code;
-    @BindView(R.id.tv_response_body) TextView tv_response_body;
-    @BindView(R.id.rv_parameters) RecyclerView rv_parameters;
-    @BindView(R.id.bt_send) Button bt_send;
-    @BindView(R.id.ll_requset) LinearLayout ll_requset;
-
-
+    RequestMainBinding binding;
     ReqParamAdapter paramAdapter;
     String historyName = null;
 
@@ -74,8 +57,8 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
 
 
         paramAdapter = new ReqParamAdapter(getActivity());
-        rv_parameters.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv_parameters.setAdapter(paramAdapter);
+        binding.rvParameters.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.rvParameters.setAdapter(paramAdapter);
 
 
         restRequestPresenter.init();
@@ -86,42 +69,31 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Logger.d("");
-        View rootView = inflater.inflate(R.layout.request_main, container, false);
-        ButterKnife.bind(this,rootView);
-        return rootView;
+        binding = RequestMainBinding.inflate(inflater, container, false);
+        binding.setView(this);
+        return binding.getRoot();
     }
 
     public boolean onBackPressed()
     {
-        if(ll_requset.getVisibility() == View.VISIBLE)
+        if(binding.llRequset.getVisibility() == View.VISIBLE)
             return true;
 
-        ll_requset.setVisibility(View.VISIBLE);
+        binding.llRequset.setVisibility(View.VISIBLE);
         return false;
     }
 
-    @OnClick({R.id.bt_send, R.id.tv_input_method})
-    public void onClick(View view) {
-
-        switch (view.getId()) {
-            case R.id.bt_send:
-                sendRequest();
-                break;
-            case R.id.tv_input_method:
-                changeMethod();
-                break;
-        }
-
-
+    @Override
+    public void sendRequest() {
+        Logger.d("");
+        binding.llRequset.setVisibility(View.GONE);
+        restRequestPresenter.requestRestApi(binding.etInputUrl.getText().toString(), paramAdapter.getItems());
     }
 
-    private void sendRequest() {
-        ll_requset.setVisibility(View.GONE);
-        restRequestPresenter.requestRestApi(et_input_url.getText().toString(), paramAdapter.getItems());
-    }
-
-    private void changeMethod() {
-        String method = tv_input_method.getText().toString();
+    @Override
+    public void changeMethod() {
+        Logger.d("");
+        String method = binding.tvInputMethod.getText().toString();
         if(method.equals(RestRequestPresenter.Method.GET.name()))
             restRequestPresenter.setMethod(RestRequestPresenter.Method.POST);
         else if(method.equals(RestRequestPresenter.Method.POST.name()))
@@ -160,7 +132,7 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
 
         Logger.d("initView#url:"+url);
 //        tv_input_method.setText("POST");
-        et_input_url.setText(url);
+        binding.etInputUrl.setText(url);
     }
 
     @Override
@@ -171,7 +143,7 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
 
     @Override
     public void showResponse(CustomResponse response) {
-        tv_response_code.setText(String.valueOf(response.code));
+        binding.tvResponseCode.setText(String.valueOf(response.code));
 
         String body = "";
         if(response.code == 200)
@@ -183,7 +155,7 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
             body = response.errorbody;
         }
 
-        tv_response_body.setText(body);
+        binding.tvResponseBody.setText(body);
 
     }
 
@@ -194,6 +166,6 @@ public class RestRequestFragment extends Fragment implements RestRequestContract
 
     @Override
     public void setMethod(String method) {
-        tv_input_method.setText(method);
+        binding.tvInputMethod.setText(method);
     }
 }
