@@ -1,8 +1,8 @@
 package com.lazycouple.restapiclient;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
 
     private boolean processBackPressed()
     {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.content_frame);
 
         if(fragment instanceof RestRequestFragment)
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity
 
     private void switchFragment(Fragment fragment)
     {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.content_frame, fragment);
         fragmentTransaction.commit();

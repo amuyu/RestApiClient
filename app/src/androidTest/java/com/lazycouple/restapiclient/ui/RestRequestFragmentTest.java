@@ -1,10 +1,9 @@
 package com.lazycouple.restapiclient.ui;
 
-import android.app.FragmentManager;
+import android.support.v4.app.FragmentManager;
 import android.support.test.espresso.PerformException;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.util.HumanReadables;
 import android.support.test.espresso.util.TreeIterables;
@@ -28,11 +27,8 @@ import java.util.concurrent.TimeoutException;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.junit.Assert.*;
 
 /**
  * Created by noco on 2016-10-21.
@@ -49,7 +45,7 @@ public class RestRequestFragmentTest {
     public void setUp() throws Exception {
 
         MainActivity activity = activityTestRule.getActivity();
-        FragmentManager fragmentManager = activity.getFragmentManager();
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
         requestFragment = (RestRequestFragment)fragmentManager.findFragmentById(R.id.content_frame);
 
 

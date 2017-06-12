@@ -1,16 +1,20 @@
 package com.lazycouple.restapiclient.ui.presenter;
 
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.lazycouple.restapiclient.data.DataManager;
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract;
 import com.lazycouple.restapiclient.ui.data.CustomResponse;
 import com.lazycouple.restapiclient.ui.data.Parameter;
+import com.lazycouple.restapiclient.ui.viewModel.RestRequestViewModel;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.mockito.internal.configuration.injection.MockInjection;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -35,18 +39,20 @@ public class RestRequestPresenterTest {
 
     private RestRequestPresenter restRequestPresenter;
 
-
+    private Context context;
     private RestRequestContract.View mockView;
     private DataManager dataManager;
+    private RestRequestViewModel viewModel;
 
     @Before
     public void setUp() throws Exception {
 //        MockitoAnnotations.initMocks(this);
+        this.context = InstrumentationRegistry.getTargetContext();
         this.mockView = Mockito.mock(RestRequestContract.View.class);
         this.dataManager = Mockito.mock(DataManager.class);
+        this.viewModel = Mockito.mock(RestRequestViewModel.class);
 
-
-        restRequestPresenter = new RestRequestPresenter(mockView, dataManager);
+        restRequestPresenter = new RestRequestPresenter(context, mockView, dataManager, viewModel);
     }
 
     @Test

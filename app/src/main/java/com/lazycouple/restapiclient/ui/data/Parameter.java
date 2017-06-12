@@ -33,6 +33,13 @@ public class Parameter {
         this.value = value;
     }
 
+    @Override
+    public String toString() {
+        return "Parameter{" +
+                "key='" + key + '\'' +
+                ", value='" + value + '\'' +
+                '}';
+    }
 
     public static final class Builder {
         private String key;

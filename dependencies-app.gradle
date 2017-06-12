@@ -14,8 +14,8 @@ rootProject.allprojects { project ->
 
                 // Dagger2
                 compile deps.dagger
-                apt deps.dagger_compiler
-                provided deps.annotation
+                annotationProcessor deps.dagger_compiler
+//                provided deps.annotation
 
 
                 // rxjava
@@ -26,6 +26,11 @@ rootProject.allprojects { project ->
                 compile deps.retrofit2_gson
                 compile deps.retrofit2_rxjava2
                 compile deps.okhttp_log_interceptor
+
+                // lifecycle
+                compile deps.lifecycle_runtime
+                compile deps.lifecycle_extensions
+                annotationProcessor deps.lifecycle_annotation
 
                 // Logger
                 compile deps.logger

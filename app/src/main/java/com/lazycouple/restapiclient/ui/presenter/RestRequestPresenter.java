@@ -7,7 +7,9 @@ import com.lazycouple.restapiclient.data.DataManager;
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract;
 import com.lazycouple.restapiclient.ui.data.CustomResponse;
 import com.lazycouple.restapiclient.ui.data.Parameter;
+import com.lazycouple.restapiclient.util.ConfigProperties;
 import com.lazycouple.restapiclient.util.Utils;
+import com.lazycouple.restapiclient.ui.viewModel.RestRequestViewModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,40 +28,63 @@ import rx.Subscriber;
  */
 public class RestRequestPresenter implements RestRequestContract.Presenter {
 
-    private final String TAG = RestRequestPresenter.class.getSimpleName();
-
+    private final Context context;
     private final RestRequestContract.View view;
     private final DataManager dataManager;
+    private RestRequestViewModel viewModel;
 
     public enum Method {
         GET, POST;
-//        private String value;
-//        private Method(String value) {
-//            this.value = value;
-//        }
-//        public String getValue() {
-//            return this.value;
-//        }
-
     }
 
-    private Method method = Method.GET;
+
 
     @Inject
-    public RestRequestPresenter(RestRequestContract.View view, DataManager apiManager) {
+    public RestRequestPresenter(Context context, RestRequestContract.View view,
+                                DataManager apiManager, RestRequestViewModel viewModel) {
+        this.context = context;
         this.view = view;
         this.dataManager = apiManager;
+        this.viewModel = viewModel;
     }
 
     @Override
-    public void init() {
-        view.initView();
+    public void loadData(String historyName) {
+
+        String url = "http://54.92.43.68:8180/safenumber/v3/default/svc/token";
+
+        if(historyName != null)
+        {
+            List<Parameter> params = ConfigProperties.getApiInfo(context, historyName);
+            for(Parameter param : params)
+            {
+                if(!param.getKey().equals("url"))
+                    viewModel.addItem(param);
+                else
+                    url = param.getValue();
+            }
+        }
+        else
+        {
+            viewModel.addItem(new Parameter("cpn","01058557235"));
+            viewModel.addItem(new Parameter("user_token","0f7094d5-09e3-40ef-93da-b41d79015db6"));
+            viewModel.addItem(new Parameter("device_type","2"));
+            viewModel.addItem(new Parameter("push_token","dr6qEYf69HM:APA91bFuy8eg59Jdi7w23T1eeOZ36HOkDgbndm8OCf9ChI_yYPGwnxLjkHfx5sTStYVlAlYKi647NWyH7X9R-gPWbW_sDA3W63jvaMBkxnagkd6m9L-7CJtehPxnULNGCXujnoL6CiJz"));
+        }
+
+
+        Logger.d("refresh#url:"+url);
+        Logger.d(viewModel.getItemCount());
+        viewModel.setUrl(url);
+        view.refresh();
     }
+
+
 
     @Override
     public void requestRestApi(String url, List<Parameter> parameters) {
-
-        switch (method) {
+        viewModel.setRequest(true);
+        switch (viewModel.getMethod()) {
             case GET:
                 Map<String, String> map = Utils.mapParameters(parameters);
                 requestGet(url, map);
@@ -74,14 +99,29 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
     }
 
     @Override
+    public RestRequestViewModel getViewModel() {
+        return viewModel;
+    }
+
+    @Override
     public Method getMethod() {
-        return method;
+        return viewModel.getMethod();
     }
 
     @Override
     public void setMethod(Method method) {
-        this.method = method;
-        view.setMethod(method.name());
+        viewModel.setMethod(method);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+
+        if(viewModel.isRequest()) {
+            viewModel.setRequest(false);
+            return false;
+        }
+
+        return true;
     }
 
     private void requestGet(String url, Map<String,String> map) {
@@ -128,8 +168,7 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
                             }
                         }
 
-
-                        view.showResponse(customResponse);
+                        viewModel.setResponse(customResponse);
                     }
                 });
     }
@@ -179,7 +218,7 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
                         }
 
 
-                        view.showResponse(customResponse);
+                        viewModel.setResponse(customResponse);
                     }
                 });
     }

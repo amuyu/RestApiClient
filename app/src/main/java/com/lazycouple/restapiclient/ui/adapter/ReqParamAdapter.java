@@ -10,9 +10,9 @@ import com.amuyu.logger.Logger;
 import com.android.databinding.library.baseAdapters.BR;
 import com.lazycouple.restapiclient.databinding.ReqParametersRowBinding;
 import com.lazycouple.restapiclient.ui.data.Parameter;
+import com.lazycouple.restapiclient.ui.viewModel.RestRequestViewModel;
 import com.lazycouple.restapiclient.util.BindingHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,24 +21,21 @@ import java.util.List;
 public class ReqParamAdapter extends RecyclerView.Adapter<ReqParamAdapter.ParameterHolder> {
     private final String TAG = ReqParamAdapter.class.getSimpleName();
     private Context mContext;
-    private List<Parameter> parameters;
+    private final RestRequestViewModel viewModel;
 
-    public ReqParamAdapter(Context mContext) {
+    public ReqParamAdapter(Context mContext, RestRequestViewModel viewModel) {
         Logger.d("ReqParamAdapter");
         this.mContext = mContext;
-        parameters = new ArrayList<>();
-    }
-
-    public void add(Parameter param) {
-        parameters.add(param);
+        this.viewModel = viewModel;
+        setHasStableIds(true);
     }
 
     public Parameter getItem(int position) {
-        return parameters.get(position);
+        return viewModel.getItem(position);
     }
 
     public List<Parameter> getItems() {
-        return parameters;
+        return viewModel.getLists();
     }
 
     @Override
@@ -53,18 +50,21 @@ public class ReqParamAdapter extends RecyclerView.Adapter<ReqParamAdapter.Parame
 
         Parameter param = getItem(position);
         holder.bind(param);
-        Logger.d("onBindViewHolder#param:"+param.toString());
+        Logger.d("onBindViewHolder#posirion:"+position+"#param:"+param.toString());
 
     }
 
     @Override
     public int getItemCount() {
-        return parameters.size();
+        return viewModel.getItemCount();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return viewModel.getItemId(position);
     }
 
     class ParameterHolder extends BindingHolder<Parameter> {
-
-
         public ParameterHolder(ViewDataBinding binding) {
             super(binding);
         }

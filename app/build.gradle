@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'android-apt'
-
 
 def major = 0
 def minor = 1
@@ -12,13 +10,13 @@ def appVersionName = "$major.$minor.$revision"
 
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 25
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         applicationId "com.lazycouple.restapiclient"
         minSdkVersion 19
-        targetSdkVersion 22
+        targetSdkVersion 25
         versionCode appVersionCode
         versionName appVersionName
 
@@ -51,3 +49,8 @@ configurations.all {
     }
 }
 
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xmaxerrs" << "500" // or whatever number you want
+    }
+}

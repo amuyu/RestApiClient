@@ -1,13 +1,14 @@
 
 ext {
-    buildToolsVersion = "22.0.1"
-    supportLibVersion = "22.2.1"
+    buildToolsVersion = "25.0.2"
+    supportLibVersion = "25.3.1"
 
     espresso = "2.2.2"
     retrofit = "2.1.0"
     rxandroid_version = "1.2.1"
-    dagger = "2.0.1"
+    dagger = "2.11"
     mockito = "1.4"
+    lifecycle = "1.0.0-alpha1"
 }
 
 ext.deps = [
@@ -33,6 +34,10 @@ ext.deps = [
     annotation          : "org.glassfish:javax.annotation:10.0-b28",
 
     rxandroid           : "io.reactivex:rxandroid:$ext.rxandroid_version",
+
+    lifecycle_runtime   : "android.arch.lifecycle:runtime:$ext.lifecycle",
+    lifecycle_extensions: "android.arch.lifecycle:extensions:$ext.lifecycle",
+    lifecycle_annotation: "android.arch.lifecycle:compiler:$ext.lifecycle",
 
     logger : 'com.amuyu:logger:1.0.7'
 ]
