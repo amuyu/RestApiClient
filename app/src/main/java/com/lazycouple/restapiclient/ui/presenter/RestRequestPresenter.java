@@ -49,8 +49,13 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
     }
 
     @Override
-    public void loadData(String historyName) {
+    public void init(String historyName) {
+        if(viewModel.getUrl() == null) loadData(historyName);
+    }
 
+    @Override
+    public void loadData(String historyName) {
+        Logger.d("historyName:"+historyName);
         String url = "http://54.92.43.68:8180/safenumber/v3/default/svc/token";
 
         if(historyName != null)

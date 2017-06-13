@@ -3,6 +3,7 @@ package com.lazycouple.restapiclient.ui;
 
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.LifecycleRegistryOwner;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -48,8 +49,8 @@ public class RestRequestFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        RestRequestViewModel viewModel = ViewModelProviders.of(this).get(RestRequestViewModel.class);
-        RestRequestViewModel viewModel = new RestRequestViewModel();
+        RestRequestViewModel viewModel = ViewModelProviders.of(this).get(RestRequestViewModel.class);
+//        RestRequestViewModel viewModel = new RestRequestViewModel();
         DaggerRestRequestComponent.builder()
                 .restRequestModule(new RestRequestModule(this, getActivity(), viewModel))
                 .build().inject(this);
@@ -72,7 +73,7 @@ public class RestRequestFragment extends Fragment implements
         paramAdapter = new ReqParamAdapter(getActivity(), restRequestPresenter.getViewModel());
         binding.rvParameters.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvParameters.setAdapter(paramAdapter);
-        restRequestPresenter.loadData(historyName);
+        restRequestPresenter.init(historyName);
 
     }
 

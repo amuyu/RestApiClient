@@ -1,6 +1,5 @@
 package com.lazycouple.restapiclient.ui.contract;
 
-import com.lazycouple.restapiclient.ui.data.CustomResponse;
 import com.lazycouple.restapiclient.ui.data.Parameter;
 import com.lazycouple.restapiclient.ui.presenter.BasePresenter;
 import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter;
@@ -22,6 +21,7 @@ public interface RestRequestContract {
     }
 
     interface Presenter extends BasePresenter {
+        void init(String historyName);
         void loadData(String historyName);
         void requestRestApi(String url, List<Parameter> parameters);
         RestRequestViewModel getViewModel();

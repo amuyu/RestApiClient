@@ -1,6 +1,6 @@
 package com.lazycouple.restapiclient.ui.viewModel;
 
-import android.databinding.BaseObservable;
+import com.lazycouple.restapiclient.util.ObservableViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * Created by amuyu on 2017. 6. 12..
  */
 
-public abstract class AdapterViewModel<T> extends BaseObservable {
+public abstract class AdapterViewModel<T> extends ObservableViewModel {
     List<T> lists = new ArrayList<T>();
 
     public List<T> getLists() {
