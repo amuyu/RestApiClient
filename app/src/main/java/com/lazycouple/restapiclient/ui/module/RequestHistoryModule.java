@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.lazycouple.restapiclient.ui.contract.RequestHistoryContract;
 import com.lazycouple.restapiclient.ui.viewModel.RequestHistoryViewModel;
+import com.lazycouple.restapiclient.data.RestRepository;
+import com.lazycouple.restapiclient.Injection;
 
 import dagger.Module;
 import dagger.Provides;
@@ -43,5 +45,10 @@ public class RequestHistoryModule {
     @Provides
     public RequestHistoryViewModel provideViewModel() {
         return viewModel;
+    }
+
+    @Provides
+    public RestRepository provideRestRepository() {
+        return Injection.provideRestRepository();
     }
 }
