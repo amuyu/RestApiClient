@@ -7,6 +7,12 @@
         <variable
             name="title"
             type="java.lang.String"/>
+        <variable
+            name="position"
+            type="java.lang.Integer"/>
+        <variable
+            name="presenter"
+            type="com.lazycouple.restapiclient.ui.contract.RequestHistoryContract.Presenter"/>
     </data>
 
     <LinearLayout
@@ -24,7 +30,8 @@
                 android:id="@+id/ll_history"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:onClick="@{()->presenter.onClickedItem(position)}">
 
                 <TextView
                     android:id="@+id/tv_req_history_row"

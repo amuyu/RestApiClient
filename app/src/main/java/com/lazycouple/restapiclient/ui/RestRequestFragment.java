@@ -50,7 +50,6 @@ public class RestRequestFragment extends Fragment implements
         super.onCreate(savedInstanceState);
 
         RestRequestViewModel viewModel = ViewModelProviders.of(this).get(RestRequestViewModel.class);
-//        RestRequestViewModel viewModel = new RestRequestViewModel();
         DaggerRestRequestComponent.builder()
                 .restRequestModule(new RestRequestModule(this, getActivity(), viewModel))
                 .build().inject(this);

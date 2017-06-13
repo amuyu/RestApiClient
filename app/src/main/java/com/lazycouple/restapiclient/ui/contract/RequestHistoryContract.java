@@ -1,6 +1,7 @@
 package com.lazycouple.restapiclient.ui.contract;
 
 import com.lazycouple.restapiclient.ui.presenter.BasePresenter;
+import com.lazycouple.restapiclient.ui.viewModel.RequestHistoryViewModel;
 
 /**
  * Created by noco on 2016-10-27.
@@ -8,12 +9,15 @@ import com.lazycouple.restapiclient.ui.presenter.BasePresenter;
 public interface RequestHistoryContract {
 
     interface View {
-        void initView();
         void showList();
+        void showRestRequset(String historyName);
     }
 
     interface Presenter extends BasePresenter {
+        void init();
         void loadList();
+        RequestHistoryViewModel getViewModel();
+        void onClickedItem(int position);
     }
 
 }

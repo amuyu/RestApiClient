@@ -1,8 +1,9 @@
 package com.lazycouple.restapiclient.ui;
 
-import android.support.v4.app.Fragment;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -17,9 +18,7 @@ import com.lazycouple.restapiclient.ui.component.DaggerRequestHistoryComponent;
 import com.lazycouple.restapiclient.ui.contract.RequestHistoryContract;
 import com.lazycouple.restapiclient.ui.module.RequestHistoryModule;
 import com.lazycouple.restapiclient.ui.presenter.RequestHistoryPresenter;
-import com.lazycouple.restapiclient.util.ConfigProperties;
-
-import java.util.List;
+import com.lazycouple.restapiclient.ui.viewModel.RequestHistoryViewModel;
 
 import javax.inject.Inject;
 
@@ -44,8 +43,9 @@ public class RequestHistoryFragment extends Fragment implements RequestHistoryCo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        RequestHistoryViewModel viewModel = ViewModelProviders.of(this).get(RequestHistoryViewModel.class);
         DaggerRequestHistoryComponent.builder()
-                .requestHistoryModule(new RequestHistoryModule(this))
+                .requestHistoryModule(new RequestHistoryModule(getActivity(), this, viewModel))
                 .build().inject(this);
     }
 
@@ -53,11 +53,8 @@ public class RequestHistoryFragment extends Fragment implements RequestHistoryCo
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        historyAdapter = new ReqHistoryAdapter(getActivity());
-        historyAdapter.setRecyclerItemClickListener(((adapter, position) -> {
-            String historyName = ((ReqHistoryAdapter)adapter).getItem(position);
-            ((MainActivity)getActivity()).loadHistoryFragment(historyName);
-        }));
+        historyAdapter = new ReqHistoryAdapter(getActivity(),
+                requestHistoryPresenter.getViewModel(), requestHistoryPresenter);
         binding.rvHistoryList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvHistoryList.setAdapter(historyAdapter);
 
@@ -66,11 +63,12 @@ public class RequestHistoryFragment extends Fragment implements RequestHistoryCo
             public void onRefresh() {
                 // refresh event
                 Logger.d("refresh event");
+                requestHistoryPresenter.loadList();
 
             }
         });
 
-        requestHistoryPresenter.start(getActivity());
+        requestHistoryPresenter.init();
     }
 
     @Nullable
@@ -80,20 +78,13 @@ public class RequestHistoryFragment extends Fragment implements RequestHistoryCo
         return binding.getRoot();
     }
 
-
-
-    private void addHistory(String history) {
-        historyAdapter.add(history);
-    }
-
-    @Override
-    public void initView() {
-        List<String> histories = ConfigProperties.getHistories(getActivity());
-        for(String str:histories) addHistory(str);
-    }
-
     @Override
     public void showList() {
-        Logger.d("showList");
+        historyAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showRestRequset(String historyName) {
+        ((MainActivity)getActivity()).loadHistoryFragment(historyName);
     }
 }
