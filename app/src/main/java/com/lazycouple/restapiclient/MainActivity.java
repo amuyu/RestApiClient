@@ -16,7 +16,7 @@ import android.view.View;
 
 import com.amuyu.logger.Logger;
 import com.lazycouple.restapiclient.databinding.ActivityMainBinding;
-import com.lazycouple.restapiclient.ui.RequestHistoryFragment;
+import com.lazycouple.restapiclient.ui.RequestHistoryFragmentList;
 import com.lazycouple.restapiclient.ui.RestRequestFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity
                 fragment = RestRequestFragment.newInstance();
                 break;
             case R.id.nav_history:
-                fragment = RequestHistoryFragment.newInstance();
+                fragment = RequestHistoryFragmentList.newInstance();
                 break;
         }
 

@@ -9,6 +9,8 @@
     <string-array name="history">
         <item>versionCheck</item>
         <item>networkCheck</item>
+        <item>networkCheck2</item>
+        <item>networkCheck3</item>
     </string-array>
 
     <string-array name="versionCheck">
@@ -19,6 +21,16 @@
     </string-array>
 
     <string-array name="networkCheck">
+        <item>url|http://54.92.43.68:8080/safenumber/v3/svc/networkcheck</item>
+        <item>cpn|01020137245</item>
+    </string-array>
+
+    <string-array name="networkCheck2">
+        <item>url|http://54.92.43.68:8080/safenumber/v3/svc/networkcheck</item>
+        <item>cpn|01020137245</item>
+    </string-array>
+
+    <string-array name="networkCheck3">
         <item>url|http://54.92.43.68:8080/safenumber/v3/svc/networkcheck</item>
         <item>cpn|01020137245</item>
     </string-array>
