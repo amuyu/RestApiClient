@@ -84,7 +84,7 @@ public class RequestHistoryFragment extends Fragment implements RequestHistoryCo
     }
 
     @Override
-    public void showRestRequset(String historyName) {
-        ((MainActivity)getActivity()).loadHistoryFragment(historyName);
+    public void showRestRequset(String id) {
+        ((MainActivity)getActivity()).loadHistoryFragment(id);
     }
 }

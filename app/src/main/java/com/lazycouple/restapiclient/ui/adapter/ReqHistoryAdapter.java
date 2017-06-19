@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.lazycouple.restapiclient.databinding.ReqHistoryRowBinding;
+import com.lazycouple.restapiclient.db.model.Api;
 import com.lazycouple.restapiclient.ui.contract.RequestHistoryContract.Presenter;
 import com.lazycouple.restapiclient.ui.viewModel.RequestHistoryViewModel;
 import com.lazycouple.restapiclient.util.BindingHolder;
@@ -29,7 +30,7 @@ public class ReqHistoryAdapter extends RecyclerView.Adapter<ReqHistoryAdapter.Hi
         this.presenter = presenter;
     }
 
-    public String getItem(int position) {
+    public Api getItem(int position) {
         return viewModel.getItem(position);
     }
 
@@ -41,7 +42,7 @@ public class ReqHistoryAdapter extends RecyclerView.Adapter<ReqHistoryAdapter.Hi
 
     @Override
     public void onBindViewHolder(HistoryHolder holder, int position) {
-        String title = getItem(position);
+        String title = getItem(position).getUrl();
         ReqHistoryRowBinding binding = (ReqHistoryRowBinding)holder.getBinding();
         binding.setTitle(title);
         binding.setPosition(position);

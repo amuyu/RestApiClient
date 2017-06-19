@@ -1,7 +1,8 @@
 package com.lazycouple.restapiclient.data;
 
 
-import com.amuyu.logger.Logger;
+import com.lazycouple.restapiclient.db.model.Api;
+import com.lazycouple.restapiclient.db.model.Parameter;
 
 import java.util.List;
 
@@ -29,7 +30,23 @@ public class RestRepository implements DataSource {
 
     @Override
     public Observable<List<String>> getHistories() {
-        Logger.d("");
         return localDataSource.getHistories();
     }
+
+    @Override
+    public Observable<List<Api>> getApiHistories() {
+        return localDataSource.getApiHistories();
+    }
+
+    @Override
+    public void addApi(String url, List<Parameter> parameters) {
+        localDataSource.addApi(url, parameters);
+    }
+
+    @Override
+    public Observable<Api> getApi(String id) {
+        return localDataSource.getApi(id);
+    }
+
+
 }

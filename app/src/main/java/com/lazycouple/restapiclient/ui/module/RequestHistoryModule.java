@@ -49,6 +49,6 @@ public class RequestHistoryModule {
 
     @Provides
     public RestRepository provideRestRepository() {
-        return Injection.provideRestRepository();
+        return Injection.provideRestRepository(context);
     }
 }

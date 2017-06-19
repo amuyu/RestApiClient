@@ -41,7 +41,7 @@ public class ReqHistoryAdapter2 extends BaseAdapter {
     }
 
     public String getItem(int position) {
-        return viewModel.getItem(position);
+        return viewModel.getItem(position).getUrl();
     }
 
     @Override

@@ -4,7 +4,7 @@
 
         <variable
             name="param"
-            type="com.lazycouple.restapiclient.ui.data.Parameter"/>
+            type="com.lazycouple.restapiclient.db.model.Parameter"/>
 
     </data>
 

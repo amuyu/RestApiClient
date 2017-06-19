@@ -36,7 +36,7 @@ public class RestRequestFragment extends Fragment implements
 
     RequestMainBinding binding;
     ReqParamAdapter paramAdapter;
-    String historyName = null;
+    String id = null;
 
     LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
 
@@ -72,7 +72,7 @@ public class RestRequestFragment extends Fragment implements
         paramAdapter = new ReqParamAdapter(getActivity(), restRequestPresenter.getViewModel());
         binding.rvParameters.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvParameters.setAdapter(paramAdapter);
-        restRequestPresenter.init(historyName);
+        restRequestPresenter.init(id);
 
     }
 
@@ -99,8 +99,8 @@ public class RestRequestFragment extends Fragment implements
             restRequestPresenter.setMethod(RestRequestPresenter.Method.GET);
     }
 
-    public void setHistoryName(String historyName) {
-        this.historyName = historyName;
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

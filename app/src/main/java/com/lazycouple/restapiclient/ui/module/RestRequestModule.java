@@ -1,15 +1,15 @@
 package com.lazycouple.restapiclient.ui.module;
 
-import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 
+import com.lazycouple.restapiclient.Injection;
+import com.lazycouple.restapiclient.data.ApiManager;
 import com.lazycouple.restapiclient.data.DataManager;
 import com.lazycouple.restapiclient.data.DataManagerImpl;
+import com.lazycouple.restapiclient.data.RestRepository;
 import com.lazycouple.restapiclient.network.ApiModule;
-import com.lazycouple.restapiclient.data.ApiManager;
 import com.lazycouple.restapiclient.network.api.RestApiService;
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract;
-import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter;
 import com.lazycouple.restapiclient.ui.viewModel.RestRequestViewModel;
 
 import dagger.Module;
@@ -64,9 +64,13 @@ public class RestRequestModule {
     }
 
     @Provides
-    public RestRequestContract.Presenter providePresenter(RestRequestPresenter restRequestPresenter) {
+    public RestRequestContract.Presenter providePresenter(RestRequestContract.Presenter restRequestPresenter) {
         return restRequestPresenter;
     }
 
+    @Provides
+    public RestRepository provideRestRepository() {
+        return Injection.provideRestRepository(context);
+    }
 
 }

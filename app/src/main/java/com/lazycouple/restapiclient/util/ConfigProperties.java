@@ -1,17 +1,13 @@
 package com.lazycouple.restapiclient.util;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 
 import com.lazycouple.restapiclient.R;
-import com.lazycouple.restapiclient.ui.data.Parameter;
+import com.lazycouple.restapiclient.db.model.Parameter;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * Created by noco on 2016-10-13.

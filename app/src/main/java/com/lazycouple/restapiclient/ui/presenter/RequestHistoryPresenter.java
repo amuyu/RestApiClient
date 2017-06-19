@@ -3,12 +3,10 @@ package com.lazycouple.restapiclient.ui.presenter;
 import android.content.Context;
 
 import com.amuyu.logger.Logger;
-import com.lazycouple.restapiclient.ui.contract.RequestHistoryContract;
-import com.lazycouple.restapiclient.util.ConfigProperties;
-import com.lazycouple.restapiclient.ui.viewModel.RequestHistoryViewModel;
 import com.lazycouple.restapiclient.data.RestRepository;
-
-import java.util.List;
+import com.lazycouple.restapiclient.db.model.Api;
+import com.lazycouple.restapiclient.ui.contract.RequestHistoryContract;
+import com.lazycouple.restapiclient.ui.viewModel.RequestHistoryViewModel;
 
 import javax.inject.Inject;
 
@@ -38,11 +36,14 @@ public class RequestHistoryPresenter implements RequestHistoryContract.Presenter
 
     @Override
     public void loadList() {
-        repository.getHistories();
-
         viewModel.setInit(true);
-        List<String> histories = ConfigProperties.getHistories(context);
-        for(String str:histories) viewModel.addItem(str);
+//        List<String> histories = ConfigProperties.getHistories(context);
+
+        repository.getApiHistories().subscribe(results -> {
+            Logger.d(""+results.size());
+            for(Api api : results)
+                viewModel.addItem(api);
+        });
         view.showList();
     }
 
@@ -54,7 +55,7 @@ public class RequestHistoryPresenter implements RequestHistoryContract.Presenter
     @Override
     public void onClickedItem(int position) {
         Logger.d("");
-        view.showRestRequset(viewModel.getItem(position));
+        view.showRestRequset(viewModel.getItem(position).getId());
     }
 
     @Override

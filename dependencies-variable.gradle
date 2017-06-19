@@ -39,5 +39,5 @@ ext.deps = [
     lifecycle_extensions: "android.arch.lifecycle:extensions:$ext.lifecycle",
     lifecycle_annotation: "android.arch.lifecycle:compiler:$ext.lifecycle",
 
-    logger : 'com.amuyu:logger:1.0.9'
+    logger : 'com.amuyu:logger:1.1.0'
 ]

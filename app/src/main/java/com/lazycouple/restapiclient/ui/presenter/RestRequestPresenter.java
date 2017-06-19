@@ -4,12 +4,12 @@ import android.content.Context;
 
 import com.amuyu.logger.Logger;
 import com.lazycouple.restapiclient.data.DataManager;
+import com.lazycouple.restapiclient.data.RestRepository;
+import com.lazycouple.restapiclient.db.model.Parameter;
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract;
 import com.lazycouple.restapiclient.ui.data.CustomResponse;
-import com.lazycouple.restapiclient.ui.data.Parameter;
-import com.lazycouple.restapiclient.util.ConfigProperties;
-import com.lazycouple.restapiclient.util.Utils;
 import com.lazycouple.restapiclient.ui.viewModel.RestRequestViewModel;
+import com.lazycouple.restapiclient.util.Utils;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,6 +31,7 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
     private final Context context;
     private final RestRequestContract.View view;
     private final DataManager dataManager;
+    private final RestRepository repository;
     private RestRequestViewModel viewModel;
 
     public enum Method {
@@ -41,11 +42,12 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
 
     @Inject
     public RestRequestPresenter(Context context, RestRequestContract.View view,
-                                DataManager apiManager, RestRequestViewModel viewModel) {
+                                DataManager apiManager, RestRequestViewModel viewModel, RestRepository repository) {
         this.context = context;
         this.view = view;
         this.dataManager = apiManager;
         this.viewModel = viewModel;
+        this.repository = repository;
     }
 
     @Override
@@ -54,30 +56,54 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
     }
 
     @Override
-    public void loadData(String historyName) {
-        Logger.d("historyName:"+historyName);
-        String url = "http://54.92.43.68:8180/safenumber/v3/default/svc/token";
+    public void loadData(String id) {
+        Logger.d("historyName:"+id);
 
-        if(historyName != null)
+        
+
+
+        if(id != null)
         {
-            List<Parameter> params = ConfigProperties.getApiInfo(context, historyName);
-            for(Parameter param : params)
-            {
-                if(!param.getKey().equals("url"))
-                    viewModel.addItem(param);
-                else
-                    url = param.getValue();
-            }
+            repository.getApi(id).subscribe(api -> {
+                if(api != null) {
+                    Logger.d(""+api.toString());
+                    String url = "http://54.92.43.68:8180/safenumber/v3/default/svc/token";
+                    List<Parameter> params = api.getParameters();
+                    for(Parameter param : params)
+                    {
+                        if(!param.getKey().equals("url"))
+                            viewModel.addItem(param);
+                        else
+                            url = param.getValue();
+                    }
+
+                    showData(url);
+                }
+            });
+
+//            List<Parameter> params = ConfigProperties.getApiInfo(context, historyName);
+//            for(Parameter param : params)
+//            {
+//                if(!param.getKey().equals("url"))
+//                    viewModel.addItem(param);
+//                else
+//                    url = param.getValue();
+//            }
         }
         else
         {
+            String url = "http://54.92.43.68:8180/safenumber/v3/default/svc/token";
             viewModel.addItem(new Parameter("cpn","01058557235"));
             viewModel.addItem(new Parameter("user_token","0f7094d5-09e3-40ef-93da-b41d79015db6"));
             viewModel.addItem(new Parameter("device_type","2"));
             viewModel.addItem(new Parameter("push_token","dr6qEYf69HM:APA91bFuy8eg59Jdi7w23T1eeOZ36HOkDgbndm8OCf9ChI_yYPGwnxLjkHfx5sTStYVlAlYKi647NWyH7X9R-gPWbW_sDA3W63jvaMBkxnagkd6m9L-7CJtehPxnULNGCXujnoL6CiJz"));
+
+            showData(url);
         }
 
+    }
 
+    private void showData(String url) {
         Logger.d("refresh#url:"+url);
         Logger.d(viewModel.getItemCount());
         viewModel.setUrl(url);
@@ -86,8 +112,10 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
 
 
 
+
     @Override
     public void requestRestApi(String url, List<Parameter> parameters) {
+        repository.addApi(url, parameters);
         viewModel.setRequest(true);
         switch (viewModel.getMethod()) {
             case GET:

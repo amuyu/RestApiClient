@@ -4,7 +4,7 @@ import android.databinding.Bindable;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.lazycouple.restapiclient.ui.data.CustomResponse;
-import com.lazycouple.restapiclient.ui.data.Parameter;
+import com.lazycouple.restapiclient.db.model.Parameter;
 import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter.Method;
 
 /**

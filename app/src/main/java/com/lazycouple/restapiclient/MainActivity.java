@@ -150,10 +150,10 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void loadHistoryFragment(String historyName)
+    public void loadHistoryFragment(String id)
     {
         Fragment fragment = RestRequestFragment.newInstance();
-        ((RestRequestFragment)fragment).setHistoryName(historyName);
+        ((RestRequestFragment)fragment).setId(id);
         switchFragment(fragment);
     }
 

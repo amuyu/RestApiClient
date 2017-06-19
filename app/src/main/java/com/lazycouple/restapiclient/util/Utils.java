@@ -2,7 +2,7 @@ package com.lazycouple.restapiclient.util;
 
 import android.net.Uri;
 
-import com.lazycouple.restapiclient.ui.data.Parameter;
+import com.lazycouple.restapiclient.db.model.Parameter;
 
 import java.util.HashMap;
 import java.util.List;

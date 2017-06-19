@@ -10,7 +10,7 @@ public interface RequestHistoryContract {
 
     interface View {
         void showList();
-        void showRestRequset(String historyName);
+        void showRestRequset(String id);
     }
 
     interface Presenter extends BasePresenter {

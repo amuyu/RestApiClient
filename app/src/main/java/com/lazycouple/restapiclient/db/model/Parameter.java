@@ -1,11 +1,12 @@
-package com.lazycouple.restapiclient.ui.data;
+package com.lazycouple.restapiclient.db.model;
 
-import okhttp3.FormBody;
+import io.realm.RealmObject;
 
 /**
  * Created by noco on 2016-10-13.
  */
-public class Parameter {
+public class Parameter extends RealmObject {
+    private String id;
     private String key;
     private String value;
 
@@ -15,6 +16,14 @@ public class Parameter {
     public Parameter(String key, String value) {
         this.key = key;
         this.value = value;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getKey() {
@@ -36,7 +45,8 @@ public class Parameter {
     @Override
     public String toString() {
         return "Parameter{" +
-                "key='" + key + '\'' +
+                "id='" + id + '\'' +
+                ", key='" + key + '\'' +
                 ", value='" + value + '\'' +
                 '}';
     }

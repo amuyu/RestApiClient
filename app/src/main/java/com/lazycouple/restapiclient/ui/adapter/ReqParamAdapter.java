@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.amuyu.logger.Logger;
 import com.android.databinding.library.baseAdapters.BR;
 import com.lazycouple.restapiclient.databinding.ReqParametersRowBinding;
-import com.lazycouple.restapiclient.ui.data.Parameter;
+import com.lazycouple.restapiclient.db.model.Parameter;
 import com.lazycouple.restapiclient.ui.viewModel.RestRequestViewModel;
 import com.lazycouple.restapiclient.util.BindingHolder;
 
