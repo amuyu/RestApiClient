@@ -121,4 +121,10 @@ public class RestRequestFragment extends Fragment implements
     public LifecycleRegistry getLifecycle() {
         return mLifecycleRegistry;
     }
+
+    @Override
+    public void onDestroy() {
+        restRequestPresenter.destroy();
+        super.onDestroy();
+    }
 }

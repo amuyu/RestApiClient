@@ -19,6 +19,7 @@ public interface RequestHistoryContract {
         RequestHistoryViewModel getViewModel();
         void onClickedItem(int position);
         void clearItems();
+        void destroy();
     }
 
 }

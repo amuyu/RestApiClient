@@ -17,6 +17,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import io.realm.Realm;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -33,6 +34,7 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
     private final DataManager dataManager;
     private final RestRepository repository;
     private RestRequestViewModel viewModel;
+    private Realm realm;
 
     public enum Method {
         GET, POST;
@@ -48,6 +50,7 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
         this.dataManager = apiManager;
         this.viewModel = viewModel;
         this.repository = repository;
+        realm = Realm.getDefaultInstance();
     }
 
     @Override
@@ -64,7 +67,7 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
 
         if(id != null)
         {
-            repository.getApi(id).subscribe(api -> {
+            repository.getApi(realm, id).subscribe(api -> {
                 if(api != null) {
                     Logger.d(""+api.toString());
                     String url = "http://54.92.43.68:8180/safenumber/v3/default/svc/token";
@@ -155,6 +158,11 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
         }
 
         return true;
+    }
+
+    @Override
+    public void destroy() {
+        realm.close();
     }
 
     private void requestGet(String url, Map<String,String> map) {

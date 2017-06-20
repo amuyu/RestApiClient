@@ -30,5 +30,6 @@ public interface RestRequestContract {
         void setMethod(RestRequestPresenter.Method method);
 
         boolean onBackPressed();
+        void destroy();
     }
 }

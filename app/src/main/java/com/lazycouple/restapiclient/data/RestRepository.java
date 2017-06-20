@@ -6,6 +6,7 @@ import com.lazycouple.restapiclient.db.model.Parameter;
 
 import java.util.List;
 
+import io.realm.Realm;
 import rx.Observable;
 
 /**
@@ -34,8 +35,8 @@ public class RestRepository implements DataSource {
     }
 
     @Override
-    public Observable<List<Api>> getApiHistories() {
-        return localDataSource.getApiHistories();
+    public Observable<List<Api>> getApiHistories(Realm realm) {
+        return localDataSource.getApiHistories(realm);
     }
 
     @Override
@@ -44,8 +45,8 @@ public class RestRepository implements DataSource {
     }
 
     @Override
-    public Observable<Api> getApi(String id) {
-        return localDataSource.getApi(id);
+    public Observable<Api> getApi(Realm realm, String id) {
+        return localDataSource.getApi(realm,id);
     }
 
     @Override

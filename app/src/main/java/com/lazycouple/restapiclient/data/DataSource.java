@@ -5,6 +5,7 @@ import com.lazycouple.restapiclient.db.model.Parameter;
 
 import java.util.List;
 
+import io.realm.Realm;
 import rx.Observable;
 
 /**
@@ -19,9 +20,9 @@ public interface DataSource {
     }
 
     Observable<List<String>> getHistories();
-    Observable<List<Api>> getApiHistories();
+    Observable<List<Api>> getApiHistories(Realm realm);
     void addApi(String url, List<Parameter> parameters);
-    Observable<Api> getApi(String id);
+    Observable<Api> getApi(Realm realm, String id);
     void clearApiHistories();
 
 

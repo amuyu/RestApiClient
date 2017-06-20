@@ -47,51 +47,35 @@ public class RestLocalDataSource implements DataSource {
     }
 
     @Override
-    public Observable<List<Api>> getApiHistories() {
-        Logger.d("");
-        try (Realm realm = Realm.getDefaultInstance()) {
-            RealmResults<Api> results = realm.where(Api.class).findAll();
-            List<Api> apis = realm.copyFromRealm(results);
-            return Observable.create(new Observable.OnSubscribe<List<Api>>(){
-                @Override
-                public void call(Subscriber<? super List<Api>> subscriber) {
-                    subscriber.onNext(apis);
-                }
-            });
-        }
-
+    public Observable<List<Api>> getApiHistories(Realm realm) {
+        return realm.where(Api.class).findAll()
+                .asObservable()
+                .map(apis -> apis);
     }
 
     @Override
     public void addApi(String url, List<Parameter> parameters) {
         try (Realm realm = Realm.getDefaultInstance()) {
-            realm.beginTransaction();
-            final Api restapi = new Api();
-            restapi.setId(UUID.randomUUID().toString().replace("-",""));
-            restapi.setParameters(parameters);
-            restapi.setUrl(url);
-            restapi.setDate(new Date());
-            realm.copyToRealmOrUpdate(restapi);
-            realm.commitTransaction();
-
-            storeRealm(realm);
+            realm.executeTransaction(newRealm -> {
+                final Api restapi = new Api();
+                restapi.setId(UUID.randomUUID().toString().replace("-",""));
+                restapi.setParameters(parameters);
+                restapi.setUrl(url);
+                restapi.setDate(new Date());
+                newRealm.copyToRealmOrUpdate(restapi);
+                storeRealm(newRealm);
+            });
         }
     }
 
     @Override
-    public Observable<Api> getApi(String id) {
-        Logger.d(""+id);
-        try (Realm realm = Realm.getDefaultInstance()) {
-            RealmResults<Api> results = realm.where(Api.class)
-                    .equalTo("id", id).findAll();
-            Api api = (results.size() > 0)? realm.copyFromRealm(results.first()) : null;
-            return Observable.create(new Observable.OnSubscribe<Api>(){
-                @Override
-                public void call(Subscriber<? super Api> subscriber) {
-                    subscriber.onNext(api);
-                }
-            });
-        }
+    public Observable<Api> getApi(Realm realm, String id) {
+        return realm.where(Api.class).equalTo("id", id)
+                .findAll().asObservable()
+                .map(apis -> {
+                    if(apis.size()>0) return apis.first();
+                    return null;
+                });
     }
 
     @Override

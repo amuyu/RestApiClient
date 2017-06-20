@@ -4,11 +4,12 @@ import android.content.Context;
 
 import com.amuyu.logger.Logger;
 import com.lazycouple.restapiclient.data.RestRepository;
-import com.lazycouple.restapiclient.db.model.Api;
 import com.lazycouple.restapiclient.ui.contract.RequestHistoryContract;
 import com.lazycouple.restapiclient.ui.viewModel.RequestHistoryViewModel;
 
 import javax.inject.Inject;
+
+import io.realm.Realm;
 
 /**
  * Created by noco on 2016-10-27.
@@ -18,6 +19,7 @@ public class RequestHistoryPresenter implements RequestHistoryContract.Presenter
     private final RequestHistoryContract.View view;
     private final RequestHistoryViewModel viewModel;
     private final RestRepository repository;
+    private Realm realm;
 
     @Inject
     public RequestHistoryPresenter(Context context, RequestHistoryContract.View view,
@@ -26,6 +28,7 @@ public class RequestHistoryPresenter implements RequestHistoryContract.Presenter
         this.view = view;
         this.viewModel = viewModel;
         this.repository = repository;
+        this.realm = Realm.getDefaultInstance();
     }
 
 
@@ -39,12 +42,11 @@ public class RequestHistoryPresenter implements RequestHistoryContract.Presenter
         viewModel.setInit(true);
 //        List<String> histories = ConfigProperties.getHistories(context);
 
-        repository.getApiHistories().subscribe(results -> {
-            Logger.d(""+results.size());
-            for(Api api : results)
-                viewModel.addItem(api);
+        repository.getApiHistories(realm).subscribe(results -> {
+            viewModel.setLists(results);
+            view.showList();
         });
-        view.showList();
+
     }
 
     @Override
@@ -60,9 +62,12 @@ public class RequestHistoryPresenter implements RequestHistoryContract.Presenter
 
     @Override
     public void clearItems() {
-        Logger.d("");
         repository.clearApiHistories();
+    }
 
+    @Override
+    public void destroy() {
+        realm.close();
     }
 
     @Override

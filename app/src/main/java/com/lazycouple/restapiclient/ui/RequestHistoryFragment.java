@@ -112,4 +112,10 @@ public class RequestHistoryFragment extends Fragment implements RequestHistoryCo
     public void showRestRequset(String id) {
         ((MainActivity)getActivity()).loadHistoryFragment(id);
     }
+
+    @Override
+    public void onDestroy() {
+        requestHistoryPresenter.destroy();
+        super.onDestroy();
+    }
 }
