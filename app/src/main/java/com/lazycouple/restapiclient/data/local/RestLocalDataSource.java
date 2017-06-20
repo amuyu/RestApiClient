@@ -94,6 +94,19 @@ public class RestLocalDataSource implements DataSource {
         }
     }
 
+    @Override
+    public void clearApiHistories() {
+        try (Realm realm = Realm.getDefaultInstance()) {
+            realm.beginTransaction();
+            RealmResults<Api> apis = realm.where(Api.class).findAll();
+            if(apis.size() > 0) apis.deleteAllFromRealm();
+
+            RealmResults<Parameter> parameters = realm.where(Parameter.class).findAll();
+            if(parameters.size() > 0) parameters.deleteAllFromRealm();
+            realm.commitTransaction();
+        }
+    }
+
     private void storeRealm(Realm realm) {
         File file = new File(context.getExternalCacheDir(), "default.realm");
         file.delete();

@@ -48,5 +48,10 @@ public class RestRepository implements DataSource {
         return localDataSource.getApi(id);
     }
 
+    @Override
+    public void clearApiHistories() {
+        localDataSource.clearApiHistories();
+    }
+
 
 }

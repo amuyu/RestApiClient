@@ -59,6 +59,13 @@ public class RequestHistoryPresenter implements RequestHistoryContract.Presenter
     }
 
     @Override
+    public void clearItems() {
+        Logger.d("");
+        repository.clearApiHistories();
+
+    }
+
+    @Override
     public void start(Context context) {
         // nothing
     }

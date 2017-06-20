@@ -22,6 +22,7 @@ public interface DataSource {
     Observable<List<Api>> getApiHistories();
     void addApi(String url, List<Parameter> parameters);
     Observable<Api> getApi(String id);
+    void clearApiHistories();
 
 
 }

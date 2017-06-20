@@ -7,11 +7,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.amuyu.logger.Logger;
 import com.lazycouple.restapiclient.MainActivity;
+import com.lazycouple.restapiclient.R;
 import com.lazycouple.restapiclient.databinding.HistoryMainBinding;
 import com.lazycouple.restapiclient.ui.adapter.ReqHistoryAdapter;
 import com.lazycouple.restapiclient.ui.component.DaggerRequestHistoryComponent;
@@ -74,8 +78,29 @@ public class RequestHistoryFragment extends Fragment implements RequestHistoryCo
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         binding = HistoryMainBinding.inflate(inflater, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.history_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_remove) {
+            Logger.d("");
+            requestHistoryPresenter.clearItems();
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
