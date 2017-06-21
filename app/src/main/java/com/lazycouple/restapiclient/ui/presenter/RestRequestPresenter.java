@@ -209,7 +209,8 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
                             }
                         }
 
-                        viewModel.setResponse(customResponse);
+//                        viewModel.setResponse(customResponse);
+                        view.showResponse(customResponse);
                     }
                 });
     }
@@ -259,7 +260,8 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
                         }
 
 
-                        viewModel.setResponse(customResponse);
+//                        viewModel.setResponse(customResponse);
+                        view.showResponse(customResponse);
                     }
                 });
     }

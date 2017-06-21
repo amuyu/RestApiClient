@@ -18,6 +18,7 @@ import com.lazycouple.restapiclient.MainActivity;
 import com.lazycouple.restapiclient.R;
 import com.lazycouple.restapiclient.databinding.HistoryMainBinding;
 import com.lazycouple.restapiclient.ui.adapter.ReqHistoryAdapter;
+import com.lazycouple.restapiclient.ui.base.BaseFragment;
 import com.lazycouple.restapiclient.ui.component.DaggerRequestHistoryComponent;
 import com.lazycouple.restapiclient.ui.contract.RequestHistoryContract;
 import com.lazycouple.restapiclient.ui.module.RequestHistoryModule;
@@ -29,7 +30,7 @@ import javax.inject.Inject;
 /**
  * Created by noco on 2016-10-13.
  */
-public class RequestHistoryFragment extends Fragment implements RequestHistoryContract.View {
+public class RequestHistoryFragment extends BaseFragment implements RequestHistoryContract.View {
     private final String TAG = RequestHistoryFragment.class.getSimpleName();
 
     @Inject RequestHistoryPresenter requestHistoryPresenter;
@@ -78,6 +79,7 @@ public class RequestHistoryFragment extends Fragment implements RequestHistoryCo
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        initTabLayout(false);
         setHasOptionsMenu(true);
         binding = HistoryMainBinding.inflate(inflater, container, false);
         return binding.getRoot();

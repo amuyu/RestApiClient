@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="view"
+            type="com.lazycouple.restapiclient.ui.contract.RestRequestContract.View"/>
+
+        <variable
+            name="viewModel"
+            type="com.lazycouple.restapiclient.ui.viewModel.RestRequestViewModel"/>
+
+        <import type="android.view.View"/>
+
+    </data>
+
+
+    <LinearLayout
+        android:id="@+id/ll_requset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="@{viewModel.request?View.GONE:View.VISIBLE}">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Request"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="URL :"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/et_input_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:text="@{viewModel.url}"
+                android:inputType="textUri"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Method :"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_input_method"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@{viewModel.methodText}"
+                android:textSize="20sp"
+                android:onClick="@{()->view.changeMethod()}"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="파라미터"
+            android:textSize="20sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_parameters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/bt_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SEND"
+            android:onClick="@{()->view.sendRequest()}"/>
+
+    </LinearLayout>
+
+</layout>

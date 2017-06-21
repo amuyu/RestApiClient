@@ -1,6 +1,7 @@
 package com.lazycouple.restapiclient.ui.contract;
 
 import com.lazycouple.restapiclient.db.model.Parameter;
+import com.lazycouple.restapiclient.ui.data.CustomResponse;
 import com.lazycouple.restapiclient.ui.presenter.BasePresenter;
 import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter;
 import com.lazycouple.restapiclient.ui.viewModel.RestRequestViewModel;
@@ -18,6 +19,7 @@ public interface RestRequestContract {
 
         void sendRequest();
         void changeMethod();
+        void showResponse(CustomResponse response);
     }
 
     interface Presenter extends BasePresenter {

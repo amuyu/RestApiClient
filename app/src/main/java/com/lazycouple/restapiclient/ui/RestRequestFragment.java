@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.amuyu.logger.Logger;
-import com.lazycouple.restapiclient.databinding.RequestMainBinding;
+import com.lazycouple.restapiclient.R;
+import com.lazycouple.restapiclient.databinding.RequestFragmentBinding;
 import com.lazycouple.restapiclient.ui.adapter.ReqParamAdapter;
 import com.lazycouple.restapiclient.ui.component.DaggerRestRequestComponent;
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract;
+import com.lazycouple.restapiclient.ui.data.CustomResponse;
 import com.lazycouple.restapiclient.ui.module.RestRequestModule;
 import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter;
 import com.lazycouple.restapiclient.ui.viewModel.RestRequestViewModel;
@@ -34,7 +36,7 @@ public class RestRequestFragment extends Fragment implements
     @Inject
     RestRequestPresenter restRequestPresenter;
 
-    RequestMainBinding binding;
+    RequestFragmentBinding binding;
     ReqParamAdapter paramAdapter;
     String id = null;
 
@@ -59,7 +61,7 @@ public class RestRequestFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Logger.d("");
-        binding = RequestMainBinding.inflate(inflater, container, false);
+        binding = RequestFragmentBinding.inflate(inflater, container, false);
         binding.setView(this);
         return binding.getRoot();
     }
@@ -73,7 +75,6 @@ public class RestRequestFragment extends Fragment implements
         binding.rvParameters.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvParameters.setAdapter(paramAdapter);
         restRequestPresenter.init(id);
-
     }
 
 
@@ -99,6 +100,14 @@ public class RestRequestFragment extends Fragment implements
             restRequestPresenter.setMethod(RestRequestPresenter.Method.GET);
     }
 
+    @Override
+    public void showResponse(CustomResponse response) {
+        Logger.d("");
+
+        RequestMainFragment fragment = (RequestMainFragment)getFragmentManager().findFragmentById(R.id.content_frame);
+        fragment.showResponse(response);
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -113,7 +122,7 @@ public class RestRequestFragment extends Fragment implements
 
     @Override
     public void showError() {
-
+        // nothing
     }
 
 
@@ -127,4 +136,5 @@ public class RestRequestFragment extends Fragment implements
         restRequestPresenter.destroy();
         super.onDestroy();
     }
+
 }
