@@ -2,6 +2,7 @@ package com.lazycouple.restapiclient.data;
 
 import com.lazycouple.restapiclient.db.model.Api;
 import com.lazycouple.restapiclient.db.model.Parameter;
+import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface DataSource {
 
     Observable<List<String>> getHistories();
     Observable<List<Api>> getApiHistories(Realm realm);
-    void addApi(String url, List<Parameter> parameters);
+    void addApi(String url, RestRequestPresenter.Method method, List<Parameter> parameters);
     Observable<Api> getApi(Realm realm, String id);
     void clearApiHistories();
 

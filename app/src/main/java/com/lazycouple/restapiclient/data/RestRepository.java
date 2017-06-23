@@ -3,6 +3,7 @@ package com.lazycouple.restapiclient.data;
 
 import com.lazycouple.restapiclient.db.model.Api;
 import com.lazycouple.restapiclient.db.model.Parameter;
+import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter;
 
 import java.util.List;
 
@@ -40,8 +41,8 @@ public class RestRepository implements DataSource {
     }
 
     @Override
-    public void addApi(String url, List<Parameter> parameters) {
-        localDataSource.addApi(url, parameters);
+    public void addApi(String url, RestRequestPresenter.Method method, List<Parameter> parameters) {
+        localDataSource.addApi(url, method, parameters);
     }
 
     @Override

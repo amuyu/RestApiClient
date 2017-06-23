@@ -17,6 +17,7 @@ public class Api extends RealmObject {
     private String url;
     private RealmList<Parameter> parameters;
     private Date date;
+    private int Method;
 
     public Api() {
         parameters = new RealmList<>();
@@ -56,6 +57,14 @@ public class Api extends RealmObject {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int getMethod() {
+        return Method;
+    }
+
+    public void setMethod(int method) {
+        Method = method;
     }
 
     @Override

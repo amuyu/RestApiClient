@@ -9,6 +9,7 @@ import com.lazycouple.restapiclient.db.model.Parameter;
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract;
 import com.lazycouple.restapiclient.ui.data.CustomResponse;
 import com.lazycouple.restapiclient.ui.viewModel.RestRequestViewModel;
+import com.lazycouple.restapiclient.util.ConfigProperties;
 import com.lazycouple.restapiclient.util.Utils;
 
 import java.io.IOException;
@@ -37,7 +38,22 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
     private Realm realm;
 
     public enum Method {
-        GET, POST;
+        GET(0), POST(1);
+
+        public int value;
+        private Method(int value) {
+            this.value = value;
+        }
+
+        public static Method newInstance(int value) {
+            if(value == GET.getValue()) return GET;
+            else if(value == POST.getValue()) return POST;
+            else return GET;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 
 
@@ -61,16 +77,12 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
     @Override
     public void loadData(String id) {
         Logger.d("historyName:"+id);
-
-        
-
-
         if(id != null)
         {
             repository.getApi(realm, id).subscribe(api -> {
                 if(api != null) {
                     Logger.d(""+api.toString());
-                    String url = "http://54.92.43.68:8180/safenumber/v3/default/svc/token";
+                    String url = api.getUrl();
                     List<Parameter> params = api.getParameters();
                     for(Parameter param : params)
                     {
@@ -79,28 +91,24 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
                         else
                             url = param.getValue();
                     }
-
+                    viewModel.setMethod(Method.newInstance(api.getMethod()));
                     showData(url);
                 }
             });
-
-//            List<Parameter> params = ConfigProperties.getApiInfo(context, historyName);
-//            for(Parameter param : params)
-//            {
-//                if(!param.getKey().equals("url"))
-//                    viewModel.addItem(param);
-//                else
-//                    url = param.getValue();
-//            }
         }
         else
         {
-            String url = "http://54.92.43.68:8180/safenumber/v3/default/svc/token";
-            viewModel.addItem(new Parameter("cpn","01058557235"));
-            viewModel.addItem(new Parameter("user_token","0f7094d5-09e3-40ef-93da-b41d79015db6"));
-            viewModel.addItem(new Parameter("device_type","2"));
-            viewModel.addItem(new Parameter("push_token","dr6qEYf69HM:APA91bFuy8eg59Jdi7w23T1eeOZ36HOkDgbndm8OCf9ChI_yYPGwnxLjkHfx5sTStYVlAlYKi647NWyH7X9R-gPWbW_sDA3W63jvaMBkxnagkd6m9L-7CJtehPxnULNGCXujnoL6CiJz"));
-
+            Logger.d("history is null");
+            String url = null;
+            List<Parameter> params = ConfigProperties.getApiInfo(context, "fcmTest");
+            for(Parameter param : params)
+            {
+                if(!param.getKey().equals("url"))
+                    viewModel.addItem(param);
+                else
+                    url = param.getValue();
+            }
+            viewModel.setMethod(Method.POST);
             showData(url);
         }
 
@@ -118,7 +126,7 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
 
     @Override
     public void requestRestApi(String url, List<Parameter> parameters) {
-        repository.addApi(url, parameters);
+        repository.addApi(url, viewModel.getMethod(), parameters);
         viewModel.setRequest(true);
         switch (viewModel.getMethod()) {
             case GET:

@@ -35,4 +35,10 @@
         <item>url|http://54.92.43.68:8080/safenumber/v3/svc/networkcheck</item>
         <item>cpn|01020137245</item>
     </string-array>
+
+    <string-array name="fcmTest">
+        <item>url|https://fcm.googleapis.com/fcm/send</item>
+        <item>data|{index:1,message:helloworld}</item>
+        <item>to|RXIQPcDGYk:APA91bFv82mlL1bM1O0xrBjDhLL8NlI1iEPGiBjRbVgSYbTWM_Lh1xCMKZijLckpZ3RqVPJ7n0JVdv7DvdESuJi4_Q1mBumLdgkUZM2oqHqc132QB6ka1dIuK0jBDmFbs6j9QTnBwsva</item>
+    </string-array>
 </resources>

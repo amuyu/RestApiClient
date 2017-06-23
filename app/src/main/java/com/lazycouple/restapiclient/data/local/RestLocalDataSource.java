@@ -6,6 +6,7 @@ import com.amuyu.logger.Logger;
 import com.lazycouple.restapiclient.data.DataSource;
 import com.lazycouple.restapiclient.db.model.Api;
 import com.lazycouple.restapiclient.db.model.Parameter;
+import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter;
 
 import java.io.File;
 import java.util.Date;
@@ -15,7 +16,6 @@ import java.util.UUID;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
-import rx.Subscriber;
 
 /**
  * Created by amuyu on 2017. 6. 13..
@@ -54,7 +54,7 @@ public class RestLocalDataSource implements DataSource {
     }
 
     @Override
-    public void addApi(String url, List<Parameter> parameters) {
+    public void addApi(String url, RestRequestPresenter.Method method, List<Parameter> parameters) {
         try (Realm realm = Realm.getDefaultInstance()) {
             realm.executeTransaction(newRealm -> {
                 final Api restapi = new Api();
@@ -62,6 +62,7 @@ public class RestLocalDataSource implements DataSource {
                 restapi.setParameters(parameters);
                 restapi.setUrl(url);
                 restapi.setDate(new Date());
+                restapi.setMethod(method.getValue());
                 newRealm.copyToRealmOrUpdate(restapi);
                 storeRealm(newRealm);
             });
