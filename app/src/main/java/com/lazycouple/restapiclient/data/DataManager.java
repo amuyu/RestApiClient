@@ -13,7 +13,7 @@ import rx.Observable;
  */
 public interface DataManager {
 
-    public Observable<Response<ResponseBody>> callApi(String url, Map<String,String> map);
-    public Observable<Response<ResponseBody>> callApiPost(String url, RequestBody body);
+    public Observable<Response<ResponseBody>> callApi(String url, Map<String,String> parameter, Map<String,String> headerMap);
+    public Observable<Response<ResponseBody>> callApiPost(String url, RequestBody body, Map<String,String> headerMap);
     public List<String> loadList();
 }

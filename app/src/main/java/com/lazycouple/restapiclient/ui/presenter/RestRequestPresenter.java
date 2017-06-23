@@ -13,6 +13,7 @@ import com.lazycouple.restapiclient.util.ConfigProperties;
 import com.lazycouple.restapiclient.util.Utils;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -125,17 +126,20 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
 
 
     @Override
-    public void requestRestApi(String url, List<Parameter> parameters) {
+    public void requestRestApi(String url, List<Parameter> parameters ) {
+        HashMap<String, String> temp = new HashMap<>();
+        temp.put("Authorization", "Key=AIzaSyDuiS6N5E3lksUgwwIvd8_9Vj3PjJIcET8");
+
         repository.addApi(url, viewModel.getMethod(), parameters);
         viewModel.setRequest(true);
         switch (viewModel.getMethod()) {
             case GET:
                 Map<String, String> map = Utils.mapParameters(parameters);
-                requestGet(url, map);
+                requestGet(url, map, temp);
                 break;
             case POST:
                 RequestBody body = Utils.bodyParameters(parameters);
-                requestPost(url, body);
+                requestPost(url, body, temp);
                 break;
         }
 
@@ -173,8 +177,8 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
         realm.close();
     }
 
-    private void requestGet(String url, Map<String,String> map) {
-        dataManager.callApi(url, map)
+    private void requestGet(String url, Map<String,String> map, Map<String,String> headerMap) {
+        dataManager.callApi(url, map, headerMap)
                 .subscribe(new Subscriber<Response<ResponseBody>>() {
                     @Override
                     public void onCompleted() {
@@ -223,8 +227,8 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
                 });
     }
 
-    private void requestPost(String url, RequestBody body) {
-        dataManager.callApiPost(url, body)
+    private void requestPost(String url, RequestBody body, Map<String,String> headerMap) {
+        dataManager.callApiPost(url, body, headerMap)
                 .subscribe(new Subscriber<Response<ResponseBody>>() {
                     @Override
                     public void onCompleted() {

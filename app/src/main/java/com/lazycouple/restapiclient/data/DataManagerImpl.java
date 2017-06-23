@@ -24,13 +24,13 @@ public class DataManagerImpl implements DataManager {
 
 
     @Override
-    public Observable<Response<ResponseBody>> callApi(String url, Map<String, String> map) {
-        return apiManager.callApi(url,map);
+    public Observable<Response<ResponseBody>> callApi(String url, Map<String, String> parameter, Map<String,String> headerMap) {
+        return apiManager.callApi(url,parameter,headerMap);
     }
 
     @Override
-    public Observable<Response<ResponseBody>> callApiPost(String url, RequestBody body) {
-        return apiManager.callApiPost(url,body);
+    public Observable<Response<ResponseBody>> callApiPost(String url, RequestBody body, Map<String,String> headerMap) {
+        return apiManager.callApiPost(url,body, headerMap);
     }
 
     @Override
