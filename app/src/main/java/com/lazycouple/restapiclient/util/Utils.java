@@ -4,10 +4,14 @@ import android.net.Uri;
 
 import com.lazycouple.restapiclient.db.model.Parameter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 /**
@@ -30,12 +34,27 @@ public class Utils {
     }
 
     public static RequestBody bodyParameters(List<Parameter> params) {
-        OkHttpFormBuilder bodybuilder = new OkHttpFormBuilder();
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        JSONObject object = paramToJson(params);
+        return (object != null)?RequestBody.create(JSON, object.toString()):null;
+    }
 
-        for (Parameter param : params) {
-            bodybuilder.add(param.getKey(), param.getValue());
+    public static JSONObject paramToJson(List<Parameter> params) {
+        JSONObject object = new JSONObject();
+        try {
+            for (Parameter param : params) {
+                String value = param.getKey();
+                try {
+                    JSONObject sub = new JSONObject(param.getValue());
+                    object.put(param.getKey(), sub);
+                } catch (JSONException e) {
+                    object.put(param.getKey(), param.getValue());
+                }
+            }
+            return object;
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
-        return bodybuilder.build();
+        return null;
     }
 }
