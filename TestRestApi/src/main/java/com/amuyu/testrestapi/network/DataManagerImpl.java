@@ -1,9 +1,7 @@
-package com.lazycouple.restapiclient.data;
+package com.amuyu.testrestapi.network;
 
 import java.util.List;
 import java.util.Map;
-
-import javax.inject.Inject;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -17,9 +15,8 @@ public class DataManagerImpl implements DataManager {
 
     private final ApiManager apiManager;
 
-    @Inject
-    public DataManagerImpl(ApiManager apiManager) {
-        this.apiManager = apiManager;
+    public DataManagerImpl() {
+        this.apiManager = new ApiManager();
     }
 
 

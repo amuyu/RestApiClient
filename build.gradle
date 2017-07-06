@@ -28,4 +28,3 @@ task clean(type: Delete) {
 }
 
 apply from : 'dependencies-variable.gradle'
-apply from : 'dependencies-app.gradle'

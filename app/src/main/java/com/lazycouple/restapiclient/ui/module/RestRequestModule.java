@@ -3,23 +3,17 @@ package com.lazycouple.restapiclient.ui.module;
 import android.content.Context;
 
 import com.lazycouple.restapiclient.Injection;
-import com.lazycouple.restapiclient.data.ApiManager;
-import com.lazycouple.restapiclient.data.DataManager;
-import com.lazycouple.restapiclient.data.DataManagerImpl;
 import com.lazycouple.restapiclient.data.RestRepository;
-import com.lazycouple.restapiclient.network.ApiModule;
-import com.lazycouple.restapiclient.network.api.RestApiService;
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract;
 import com.lazycouple.restapiclient.ui.viewModel.RestRequestViewModel;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.Retrofit;
 
 /**
  * Created by noco on 2016-10-12.
  */
-@Module(includes = ApiModule.class)
+@Module
 public class RestRequestModule {
 
     private final RestRequestContract.View view;
@@ -31,22 +25,6 @@ public class RestRequestModule {
         this.context = context;
         this.viewModel = viewModel;
     }
-
-    @Provides
-    public RestApiService provideRestApiService(Retrofit retrofit) {
-        return retrofit.create(RestApiService.class);
-    }
-
-    @Provides
-    public ApiManager provideApiManager(RestApiService restApiService) {
-        return new ApiManager(restApiService);
-    }
-
-    @Provides
-    public DataManager provideDataManager(ApiManager manager) {
-        return new DataManagerImpl(manager);
-    }
-
 
     @Provides
     public RestRequestContract.View provideView() {

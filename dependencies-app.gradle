@@ -42,7 +42,7 @@ rootProject.allprojects { project ->
                 androidTestCompile deps.mockito
                 androidTestCompile deps.dx
 
-
+                complie project(':TestRestApi')
 
             }
         }

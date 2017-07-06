@@ -3,7 +3,8 @@ package com.lazycouple.restapiclient.ui.presenter;
 import android.content.Context;
 
 import com.amuyu.logger.Logger;
-import com.lazycouple.restapiclient.data.DataManager;
+import com.amuyu.testrestapi.network.DataManager;
+import com.amuyu.testrestapi.network.DataManagerImpl;
 import com.lazycouple.restapiclient.data.RestRepository;
 import com.lazycouple.restapiclient.db.model.Parameter;
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract;
@@ -61,10 +62,10 @@ public class RestRequestPresenter implements RestRequestContract.Presenter {
 
     @Inject
     public RestRequestPresenter(Context context, RestRequestContract.View view,
-                                DataManager apiManager, RestRequestViewModel viewModel, RestRepository repository) {
+                                RestRequestViewModel viewModel, RestRepository repository) {
         this.context = context;
         this.view = view;
-        this.dataManager = apiManager;
+        this.dataManager = new DataManagerImpl();
         this.viewModel = viewModel;
         this.repository = repository;
         realm = Realm.getDefaultInstance();
