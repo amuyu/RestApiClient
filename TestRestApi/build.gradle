@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 def major = 0
 def minor = 1
@@ -38,5 +39,9 @@ dependencies {
     provided deps.okhttp_log_interceptor
 
     provided deps.logger
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
+}
+repositories {
+    mavenCentral()
 }
