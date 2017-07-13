@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
+
 
 def major = 0
 def minor = 1
@@ -36,12 +39,20 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
     dataBinding {
         enabled = true
     }
 
+    lintOptions {
+        abortOnError false
+    }
 
 }
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -54,8 +65,10 @@ dependencies {
 
     // Dagger2
     compile deps.dagger
-    annotationProcessor deps.dagger_compiler
-    //                provided deps.annotation
+//    annotationProcessor deps.dagger_compiler
+    kapt deps.dagger_compiler
+//    complie deps.annotation
+    provided 'javax.annotation:jsr250-api:1.0'
 
     // rxjava
     compile deps.rxandroid
@@ -65,9 +78,9 @@ dependencies {
     compile deps.retrofit2_rxjava2
     compile deps.okhttp_log_interceptor
     // lifecycle
-    compile deps.lifecycle_runtime
-    compile deps.lifecycle_extensions
-    annotationProcessor deps.lifecycle_annotation
+//    compile deps.lifecycle_runtime
+//    compile deps.lifecycle_extensions
+//    kapt deps.lifecycle_annotation
     // Logger
     compile deps.logger
     // androidTestCompile 'org.mockito:mockito-core:1.10.19'
@@ -77,6 +90,10 @@ dependencies {
     androidTestCompile deps.mockito
     androidTestCompile deps.dx
     compile project(':TestRestApi')
+
+    // kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    kapt "com.android.databinding:compiler:2.3.2"
 }
 
 
