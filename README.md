@@ -1,2 +1,2 @@
 # RestApiClient
-Use MVP, DI, Retrofit2, RxJava
+Use MVP, Retrofit2, RxJava, Kotlin
