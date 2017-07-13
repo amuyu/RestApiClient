@@ -10,7 +10,8 @@ import dagger.Provides
  * Created by amuyu on 2017. 6. 21..
  */
 @Module(includes = arrayOf(ContextModule::class))
-class ResponseModule(private val view: ResponseContract.View, private val viewModel: ResponseViewModel) {
+class ResponseModule(private val view: ResponseContract.View,
+                     private val viewModel: ResponseViewModel) {
 
     @Provides
     fun provideView(): ResponseContract.View {

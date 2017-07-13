@@ -6,15 +6,17 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import com.amuyu.logger.Logger
-import com.lazycouple.restapiclient.Injection
 import com.lazycouple.restapiclient.MainActivity
 import com.lazycouple.restapiclient.R
 import com.lazycouple.restapiclient.databinding.HistoryMainBinding
 import com.lazycouple.restapiclient.ui.adapter.ReqHistoryAdapter
 import com.lazycouple.restapiclient.ui.base.BaseFragment
+import com.lazycouple.restapiclient.ui.component.DaggerRequestHistoryComponent
 import com.lazycouple.restapiclient.ui.contract.RequestHistoryContract
+import com.lazycouple.restapiclient.ui.module.RequestHistoryModule
 import com.lazycouple.restapiclient.ui.presenter.RequestHistoryPresenter
 import com.lazycouple.restapiclient.ui.viewModel.RequestHistoryViewModel
+import javax.inject.Inject
 
 /**
  * Created by noco on 2016-10-13.
@@ -22,7 +24,7 @@ import com.lazycouple.restapiclient.ui.viewModel.RequestHistoryViewModel
 class RequestHistoryFragment : BaseFragment(), RequestHistoryContract.View {
     private val TAG = RequestHistoryFragment::class.java.simpleName
 
-    lateinit var requestHistoryPresenter: RequestHistoryPresenter
+    @Inject lateinit var requestHistoryPresenter: RequestHistoryPresenter
 
 
     private var binding: HistoryMainBinding? = null
@@ -30,11 +32,11 @@ class RequestHistoryFragment : BaseFragment(), RequestHistoryContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        Logger.d("")
         val viewModel = RequestHistoryViewModel()
-        requestHistoryPresenter = RequestHistoryPresenter(context,
-                this, viewModel,
-                Injection.provideRestRepository(context))
+        DaggerRequestHistoryComponent.builder()
+                .requestHistoryModule(RequestHistoryModule(context, this, viewModel))
+                .build().inject(this)
 
     }
 

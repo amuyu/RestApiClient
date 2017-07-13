@@ -12,7 +12,9 @@ import dagger.Provides
  * Created by noco on 2016-10-27.
  */
 @Module
-class RequestHistoryModule(private val context: Context, private val view: RequestHistoryContract.View, private val viewModel: RequestHistoryViewModel) {
+class RequestHistoryModule(private val context: Context,
+                           private val view: RequestHistoryContract.View,
+                           private val viewModel: RequestHistoryViewModel) {
 
     @Provides
     fun providePresenter(presenter: RequestHistoryContract.Presenter): RequestHistoryContract.Presenter {

@@ -14,7 +14,9 @@ import dagger.Provides
  * Created by noco on 2016-10-12.
  */
 @Module
-class RestRequestModule(private val view: RestRequestContract.View, private val context: Context, private val viewModel: RestRequestViewModel) {
+class RestRequestModule(private val view: RestRequestContract.View,
+                        private val context: Context,
+                        private val viewModel: RestRequestViewModel) {
 
     @Provides
     fun provideView(): RestRequestContract.View {
