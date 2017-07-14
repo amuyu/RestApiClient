@@ -65,9 +65,7 @@ dependencies {
 
     // Dagger2
     compile deps.dagger
-//    annotationProcessor deps.dagger_compiler
     kapt deps.dagger_compiler
-//    complie deps.annotation
     provided 'javax.annotation:jsr250-api:1.0'
 
     // rxjava
