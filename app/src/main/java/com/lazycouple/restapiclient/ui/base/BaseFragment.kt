@@ -1,7 +1,7 @@
 package com.lazycouple.restapiclient.ui.base
 
+import android.arch.lifecycle.LifecycleFragment
 import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
 import android.view.View
 
 import com.lazycouple.restapiclient.R
@@ -10,7 +10,7 @@ import com.lazycouple.restapiclient.R
  * Created by amuyu on 2017. 6. 21..
  */
 
-open class BaseFragment : Fragment() {
+open class BaseFragment : LifecycleFragment() {
 
 
     var tabLayout: TabLayout? = null

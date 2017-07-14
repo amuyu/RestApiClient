@@ -80,9 +80,9 @@ dependencies {
     compile deps.okhttp_log_interceptor
 
     // lifecycle
-//    compile deps.lifecycle_runtime
-//    compile deps.lifecycle_extensions
-//    kapt deps.lifecycle_annotation
+    compile deps.lifecycle_runtime
+    compile deps.lifecycle_extensions
+    kapt deps.lifecycle_annotation
 
     // Logger
     compile deps.logger

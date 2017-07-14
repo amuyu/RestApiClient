@@ -1,6 +1,7 @@
 package com.lazycouple.restapiclient.ui
 
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -33,7 +34,7 @@ class RequestHistoryFragment : BaseFragment(), RequestHistoryContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Logger.d("")
-        val viewModel = RequestHistoryViewModel()
+        val viewModel = ViewModelProviders.of(this).get(RequestHistoryViewModel::class.java)
         DaggerRequestHistoryComponent.builder()
                 .requestHistoryModule(RequestHistoryModule(context, this, viewModel))
                 .build().inject(this)

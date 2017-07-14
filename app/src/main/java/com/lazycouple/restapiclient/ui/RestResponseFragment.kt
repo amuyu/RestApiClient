@@ -1,6 +1,7 @@
 package com.lazycouple.restapiclient.ui
 
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -28,8 +29,7 @@ class RestResponseFragment : Fragment(), ResponseContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Logger.d("");
-//        val viewModel = ViewModelProviders.of(this).get(ResponseViewModel::class.java)
-        val viewModel = ResponseViewModel()
+        val viewModel = ViewModelProviders.of(this).get(ResponseViewModel::class.java)
         DaggerResponseComponent.builder()
                 .contextModule(ContextModule(context))
                 .responseModule(ResponseModule(this,viewModel))
@@ -46,7 +46,9 @@ class RestResponseFragment : Fragment(), ResponseContract.View {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Logger.d("")
-        if(arguments != null) presenter!!.init(arguments)
+        arguments?.let {
+            presenter!!.init(arguments)
+        }
     }
 
     fun onBackPressed(): Boolean {

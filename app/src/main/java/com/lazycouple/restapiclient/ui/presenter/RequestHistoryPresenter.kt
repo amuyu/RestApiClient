@@ -26,6 +26,7 @@ constructor(var context: Context, private val view: RequestHistoryContract.View,
     }
 
     override fun loadList() {
+        Logger.d("");
         viewModel.isInit = true
         //        List<String> histories = ConfigProperties.getHistories(context);
 

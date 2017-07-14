@@ -54,7 +54,11 @@ constructor(private val context: Context, private val view: RestRequestContract.
     }
 
     override fun init(historyName: String?) {
+        Logger.d("");
         if (viewModel.url == null) loadData(historyName)
+        else {
+            Logger.d("url is not null");
+        }
     }
 
     override fun loadData(id: String?) {
@@ -162,7 +166,7 @@ constructor(private val context: Context, private val view: RestRequestContract.
                                         .code(response.code())
                                         .body(response.body().string())
                                         .build()
-                            } catch (e: IOException) {
+                            } catch (e: Exception) {
                                 e.printStackTrace()
                             }
 

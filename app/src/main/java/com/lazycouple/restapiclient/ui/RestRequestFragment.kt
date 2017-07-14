@@ -1,6 +1,8 @@
 package com.lazycouple.restapiclient.ui
 
 
+import android.arch.lifecycle.LifecycleFragment
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -22,7 +24,7 @@ import javax.inject.Inject
 /**
  * Created by noco on 2016-10-12.
  */
-class RestRequestFragment : Fragment(), RestRequestContract.View {
+class RestRequestFragment : LifecycleFragment(), RestRequestContract.View {
     private val TAG = RestRequestFragment::class.java.simpleName
 
 
@@ -37,8 +39,7 @@ class RestRequestFragment : Fragment(), RestRequestContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Logger.d("Dagger")
-//        val viewModel = ViewModelProviders.of(this).get(RestRequestViewModel::class.java)
-        val viewModel = RestRequestViewModel()
+        val viewModel = ViewModelProviders.of(this).get(RestRequestViewModel::class.java)
         DaggerRestRequestComponent.builder()
                 .restRequestModule(RestRequestModule(this, context, viewModel))
                 .build().inject(this);

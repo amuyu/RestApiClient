@@ -1,5 +1,6 @@
 package com.lazycouple.restapiclient.util
 
+import android.arch.lifecycle.ViewModel
 import android.databinding.Bindable
 import android.databinding.Observable
 import android.databinding.PropertyChangeRegistry
@@ -8,7 +9,7 @@ import android.databinding.PropertyChangeRegistry
  * Created by amuyu on 2017. 6. 13..
  */
 
-open class ObservableViewModel : Observable {
+open class ObservableViewModel : ViewModel(), Observable {
     @Transient private var mCallbacks: PropertyChangeRegistry? = null
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
