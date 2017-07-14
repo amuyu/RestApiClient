@@ -88,7 +88,7 @@ class RequestHistoryFragment : BaseFragment(), RequestHistoryContract.View {
     }
 
     override fun showRestRequset(id: String?) {
-        if (id != null) (activity as MainActivity).loadHistoryFragment(id)
+        if (id != null) (activity as MainActivity).loadRequestFragment(id)
     }
 
     override fun onDestroy() {

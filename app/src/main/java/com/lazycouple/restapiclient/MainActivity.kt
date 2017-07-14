@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -12,18 +11,20 @@ import android.view.Menu
 import android.view.MenuItem
 import com.amuyu.logger.Logger
 import com.lazycouple.restapiclient.databinding.ActivityMainBinding
-import com.lazycouple.restapiclient.ui.RequestHistoryFragment
-import com.lazycouple.restapiclient.ui.RequestMainFragment
 import com.lazycouple.restapiclient.ui.RestRequestFragment
+import com.lazycouple.restapiclient.ui.common.NavigationController
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val TAG = MainActivity::class.java.simpleName
     private var binding: ActivityMainBinding? = null
+    lateinit var navigationController: NavigationController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Logger.d("")
+        Logger.d("navigation2")
+        navigationController = NavigationController(this)
+
         binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         setSupportActionBar(binding!!.appBar.toolbar)
 
@@ -86,17 +87,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
-        val id = item.itemId
-
-        if (id == R.id.nav_request) {
-            // Handle the camera action
-        } else if (id == R.id.nav_history) {
-
-        }
-
-        selectItem(id)
-
-
+        selectItem(item.itemId)
         binding!!.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
@@ -107,30 +98,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      */
     private fun selectItem(id: Int) {
         Logger.d("selectItem#id:" + id)
-        var fragment: Fragment? = null
-
         when (id) {
-            R.id.nav_request -> fragment = RequestMainFragment.newInstance()
-            R.id.nav_history -> fragment = RequestHistoryFragment.newInstance()
-        }
-
-        if (fragment != null) {
-            switchFragment(fragment)
+            R.id.nav_request -> navigationController.navigateToRequestMain()
+            R.id.nav_history -> navigationController.navigateToHistory()
         }
     }
 
-    private fun switchFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.content_frame, fragment)
-        fragmentTransaction.commit()
-    }
-
-
-    fun loadHistoryFragment(id: String) {
-        val fragment = RestRequestFragment.newInstance()
-        (fragment as RestRequestFragment).setId(id)
-        switchFragment(fragment)
+    fun loadRequestFragment(id: String) {
+        navigationController.navigateToRequestMain(id)
     }
 
 
