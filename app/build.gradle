@@ -33,6 +33,10 @@ android {
         }
     }
 
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -91,7 +95,6 @@ dependencies {
     androidTestCompile deps.test_runner
     androidTestCompile deps.mockito
     androidTestCompile deps.dx
-    compile project(':TestRestApi')
 
     // kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"

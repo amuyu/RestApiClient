@@ -1,1 +1,1 @@
-include ':app', ':TestRestApi'
+include ':app'
