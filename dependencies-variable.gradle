@@ -6,7 +6,7 @@ ext {
     espresso = "2.2.2"
     retrofit = "2.1.0"
     rxandroid_version = "1.2.1"
-    dagger = "2.11"
+    dagger = "2.10"
     mockito = "1.4"
     lifecycle = "1.0.0-alpha1"
 }
