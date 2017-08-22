@@ -12,8 +12,8 @@ import android.view.ViewGroup
 import com.amuyu.logger.Logger
 import com.lazycouple.restapiclient.R
 import com.lazycouple.restapiclient.databinding.RequestFragmentBinding
+import com.lazycouple.restapiclient.deligate.MyApplication
 import com.lazycouple.restapiclient.ui.adapter.ReqParamAdapter
-import com.lazycouple.restapiclient.ui.component.DaggerRestRequestComponent
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract
 import com.lazycouple.restapiclient.ui.data.CustomResponse
 import com.lazycouple.restapiclient.ui.module.RestRequestModule
@@ -40,9 +40,11 @@ class RestRequestFragment : LifecycleFragment(), RestRequestContract.View {
         super.onCreate(savedInstanceState)
         Logger.d("Dagger")
         val viewModel = ViewModelProviders.of(this).get(RestRequestViewModel::class.java)
-        DaggerRestRequestComponent.builder()
-                .restRequestModule(RestRequestModule(this, context, viewModel))
-                .build().inject(this);
+
+        (activity.application as MyApplication)
+                .appComponent
+                .restRequestComponent(RestRequestModule(this, context, viewModel))
+                .inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {

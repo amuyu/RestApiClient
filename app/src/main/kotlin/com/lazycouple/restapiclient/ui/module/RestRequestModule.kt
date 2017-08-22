@@ -38,9 +38,5 @@ class RestRequestModule(private val view: RestRequestContract.View,
         return restRequestPresenter
     }
 
-    @Provides
-    fun provideRestRepository(): RestRepository {
-        return Injection.provideRestRepository(context)
-    }
 
 }

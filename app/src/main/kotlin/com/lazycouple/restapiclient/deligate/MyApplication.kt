@@ -4,6 +4,9 @@ import android.app.Application
 import com.amuyu.logger.DefaultLogPrinter
 import com.amuyu.logger.Logger
 import com.lazycouple.restapiclient.Injection
+import com.lazycouple.restapiclient.ui.ApplicationComponent
+import com.lazycouple.restapiclient.ui.ApplicationModule
+import com.lazycouple.restapiclient.ui.DaggerApplicationComponent
 import io.realm.Realm
 
 
@@ -12,8 +15,17 @@ import io.realm.Realm
  */
 class MyApplication : Application() {
 
+    lateinit var appComponent: ApplicationComponent
+        private set
+
     override fun onCreate() {
         super.onCreate()
+
+        appComponent = DaggerApplicationComponent.builder()
+                .applicationModule(ApplicationModule(this))
+                .build()
+        app = this
+
         Logger.addLogPrinter(DefaultLogPrinter(this))
         initRealm()
     }
@@ -32,5 +44,10 @@ class MyApplication : Application() {
         }
 
         realm.close()
+    }
+
+    companion object {
+        lateinit var app: MyApplication
+            private set
     }
 }

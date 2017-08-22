@@ -1,8 +1,6 @@
 package com.lazycouple.restapiclient.ui.module
 
 import android.content.Context
-import com.lazycouple.restapiclient.Injection
-import com.lazycouple.restapiclient.data.RestRepository
 import com.lazycouple.restapiclient.ui.contract.RequestHistoryContract
 import com.lazycouple.restapiclient.ui.viewModel.RequestHistoryViewModel
 import dagger.Module
@@ -36,8 +34,4 @@ class RequestHistoryModule(private val context: Context,
         return viewModel
     }
 
-    @Provides
-    fun provideRestRepository(): RestRepository {
-        return Injection.provideRestRepository(context)
-    }
 }

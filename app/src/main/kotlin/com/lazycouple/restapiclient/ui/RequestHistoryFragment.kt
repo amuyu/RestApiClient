@@ -10,9 +10,9 @@ import com.amuyu.logger.Logger
 import com.lazycouple.restapiclient.MainActivity
 import com.lazycouple.restapiclient.R
 import com.lazycouple.restapiclient.databinding.HistoryMainBinding
+import com.lazycouple.restapiclient.deligate.MyApplication
 import com.lazycouple.restapiclient.ui.adapter.ReqHistoryAdapter
 import com.lazycouple.restapiclient.ui.base.BaseFragment
-import com.lazycouple.restapiclient.ui.component.DaggerRequestHistoryComponent
 import com.lazycouple.restapiclient.ui.contract.RequestHistoryContract
 import com.lazycouple.restapiclient.ui.module.RequestHistoryModule
 import com.lazycouple.restapiclient.ui.presenter.RequestHistoryPresenter
@@ -35,10 +35,11 @@ class RequestHistoryFragment : BaseFragment(), RequestHistoryContract.View {
         super.onCreate(savedInstanceState)
         Logger.d("")
         val viewModel = ViewModelProviders.of(this).get(RequestHistoryViewModel::class.java)
-        DaggerRequestHistoryComponent.builder()
-                .requestHistoryModule(RequestHistoryModule(context, this, viewModel))
-                .build().inject(this)
 
+        (activity.application as MyApplication)
+                .appComponent
+                .requestHistoryComponent(RequestHistoryModule(context, this, viewModel))
+                .inject(this)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
