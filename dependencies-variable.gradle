@@ -4,7 +4,7 @@ ext {
     supportLibVersion = "25.3.1"
 
     espresso = "2.2.2"
-    retrofit = "2.1.0"
+    retrofit = "2.2.0"
     rxandroid_version = "1.2.1"
     dagger = "2.10"
     mockito = "1.4"
@@ -27,7 +27,7 @@ ext.deps = [
     retrofit2           : "com.squareup.retrofit2:retrofit:$ext.retrofit",
     retrofit2_gson      : "com.squareup.retrofit2:converter-gson:$ext.retrofit",
     retrofit2_rxjava2   : "com.squareup.retrofit2:adapter-rxjava:$ext.retrofit",
-    okhttp_log_interceptor   : 'com.squareup.okhttp3:logging-interceptor:3.3.1',
+    okhttp_log_interceptor   : 'com.squareup.okhttp3:logging-interceptor:3.6.0',
 
     dagger              : "com.google.dagger:dagger:$ext.dagger",
     dagger_compiler     : "com.google.dagger:dagger-compiler:$ext.dagger",
@@ -38,6 +38,9 @@ ext.deps = [
     lifecycle_runtime   : "android.arch.lifecycle:runtime:$ext.lifecycle",
     lifecycle_extensions: "android.arch.lifecycle:extensions:$ext.lifecycle",
     lifecycle_annotation: "android.arch.lifecycle:compiler:$ext.lifecycle",
+
+    stetho : 'com.facebook.stetho:stetho:1.4.2',
+    stetho_okhttp : 'com.facebook.stetho:stetho-okhttp3:1.4.2',
 
     logger : 'com.amuyu:logger:1.1.0'
 ]

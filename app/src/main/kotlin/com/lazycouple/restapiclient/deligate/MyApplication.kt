@@ -3,6 +3,7 @@ package com.lazycouple.restapiclient.deligate
 import android.app.Application
 import com.amuyu.logger.DefaultLogPrinter
 import com.amuyu.logger.Logger
+import com.facebook.stetho.Stetho
 import com.lazycouple.restapiclient.Injection
 import com.lazycouple.restapiclient.ui.ApplicationComponent
 import com.lazycouple.restapiclient.ui.ApplicationModule
@@ -28,6 +29,7 @@ class MyApplication : Application() {
 
         Logger.addLogPrinter(DefaultLogPrinter(this))
         initRealm()
+        Stetho.initializeWithDefaults(this)
     }
 
     fun initRealm() {

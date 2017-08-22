@@ -2,6 +2,7 @@ package com.amuyu.testrestapi.network
 
 
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.lazycouple.restapiclient.util.Utils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -48,6 +49,7 @@ class ApiManager {
     private fun getRetrofit(baseUrl: String?, interceptor: Interceptor? = null): Retrofit? {
         if(baseUrl == null) return null;
         val httpClient = OkHttpClient.Builder()
+        httpClient.addNetworkInterceptor(StethoInterceptor())
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         httpClient.addInterceptor(loggingInterceptor)
