@@ -13,13 +13,13 @@ def appVersionName = "$major.$minor.$revision"
 
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion rootProject.ext.complieSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         applicationId "com.lazycouple.restapiclient"
-        minSdkVersion 19
-        targetSdkVersion 25
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode appVersionCode
         versionName appVersionName
 
