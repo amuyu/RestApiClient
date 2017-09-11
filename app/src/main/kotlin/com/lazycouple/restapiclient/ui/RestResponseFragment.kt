@@ -1,6 +1,7 @@
 package com.lazycouple.restapiclient.ui
 
 
+import android.arch.lifecycle.LifecycleFragment
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -20,7 +21,7 @@ import javax.inject.Inject
 /**
  * Created by noco on 2016-10-12.
  */
-class RestResponseFragment : Fragment(), ResponseContract.View {
+class RestResponseFragment : LifecycleFragment(), ResponseContract.View {
 
 
     @Inject lateinit var presenter: ResponsePresenter
