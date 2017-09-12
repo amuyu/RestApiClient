@@ -27,7 +27,9 @@ class ApiManager {
 
     fun callApi(url: String, parameter: Map<String, String>, headerMap: Map<String, String>?): Observable<Response<ResponseBody>>? {
         var interceptor: Interceptor? = null
-        if (headerMap != null) interceptor = HeaderInterceptors(headerMap)
+        headerMap?.let {
+            interceptor = HeaderInterceptors(headerMap)
+        }
         val restApiService = getRetrofit(Utils.getBaseUrl(url), interceptor)
                 ?.create<RestApiService>(RestApiService::class.java) ?: return null
         return restApiService.callApi(Utils.getPath(url), parameter)
@@ -37,7 +39,9 @@ class ApiManager {
 
     fun callApiPost(url: String, body: RequestBody, headerMap: Map<String, String>?): Observable<Response<ResponseBody>>? {
         var interceptor: Interceptor? = null
-        if (headerMap != null) interceptor = HeaderInterceptors(headerMap)
+        headerMap?.let {
+            interceptor = HeaderInterceptors(headerMap)
+        }
         val restApiService = getRetrofit(Utils.getBaseUrl(url), interceptor)
                 ?.create<RestApiService>(RestApiService::class.java) ?: return null
         return restApiService.callApiPost(Utils.getPath(url), body)
@@ -48,12 +52,13 @@ class ApiManager {
 
     private fun getRetrofit(baseUrl: String?, interceptor: Interceptor? = null): Retrofit? {
         if(baseUrl == null) return null;
-        val httpClient = OkHttpClient.Builder()
-        httpClient.addNetworkInterceptor(StethoInterceptor())
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        httpClient.addInterceptor(loggingInterceptor)
-        if (interceptor != null) httpClient.addInterceptor(interceptor)
+        val httpClient = OkHttpClient.Builder().apply {
+            addNetworkInterceptor(StethoInterceptor())
+            addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+            interceptor?.let {
+                addInterceptor(interceptor)
+            }
+        }
 
         return Retrofit.Builder()
                 .baseUrl(baseUrl)

@@ -57,38 +57,42 @@ class RestRequestFragment : LifecycleFragment(), RestRequestContract.View {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Logger.d("")
-        binding.viewModel = restRequestPresenter!!.viewModel
-        paramAdapter = ReqParamAdapter(activity, restRequestPresenter!!.viewModel)
+        binding.viewModel = restRequestPresenter.viewModel
+        paramAdapter = ReqParamAdapter(activity, restRequestPresenter.viewModel).apply {
+            binding.rvParameters.adapter = this
+        }
         binding.rvParameters.layoutManager = LinearLayoutManager(activity)
-        binding.rvParameters.adapter = paramAdapter
-        restRequestPresenter!!.init(id)
+        restRequestPresenter.init(id)
     }
 
 
     fun onBackPressed(): Boolean {
-        return restRequestPresenter!!.onBackPressed()
+        return restRequestPresenter.onBackPressed()
     }
 
     override fun sendRequest() {
         Logger.d("")
-        restRequestPresenter!!.requestRestApi(binding.etInputUrl.text.toString(), paramAdapter.items)
+        restRequestPresenter.requestRestApi(binding.etInputUrl.text.toString(), paramAdapter.items)
     }
 
     override fun changeMethod() {
         Logger.d("")
         val method = binding.tvInputMethod.text.toString()
-        if (method == RestRequestPresenter.Method.GET.name)
-            restRequestPresenter!!.method = RestRequestPresenter.Method.POST
-        else if (method == RestRequestPresenter.Method.POST.name)
-            restRequestPresenter!!.method = RestRequestPresenter.Method.GET
+        when(method) {
+            RestRequestPresenter.Method.GET.name -> {
+                restRequestPresenter.method = RestRequestPresenter.Method.POST
+            }
+            RestRequestPresenter.Method.POST.name -> {
+                restRequestPresenter.method = RestRequestPresenter.Method.GET
+            }
+        }
     }
 
     override fun showResponse(response: CustomResponse?) {
         Logger.d("")
-
-        if(response != null) {
+        response?.let {
             val fragment = fragmentManager.findFragmentById(R.id.content_frame) as RequestMainFragment
-            fragment.showResponse(response)
+            fragment.showResponse(it)
         }
     }
 
@@ -109,15 +113,14 @@ class RestRequestFragment : LifecycleFragment(), RestRequestContract.View {
 
 
     override fun onDestroy() {
-        restRequestPresenter!!.destroy()
+        restRequestPresenter.destroy()
         super.onDestroy()
     }
 
     companion object {
 
         fun newInstance(): Fragment {
-            val fragment = RestRequestFragment()
-            return fragment
+            return RestRequestFragment()
         }
     }
 

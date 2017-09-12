@@ -39,8 +39,10 @@ class RestResponseFragment : LifecycleFragment(), ResponseContract.View {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Logger.d("dagger")
-        binding = ResponseFragmentBinding.inflate(inflater, container, false)
-        binding.viewModel = presenter!!.viewModel
+        binding = ResponseFragmentBinding.inflate(inflater, container, false).apply {
+            viewModel = presenter.viewModel
+        }
+
         return binding.root
     }
 
@@ -48,7 +50,7 @@ class RestResponseFragment : LifecycleFragment(), ResponseContract.View {
         super.onActivityCreated(savedInstanceState)
         Logger.d("")
         arguments?.let {
-            presenter!!.init(arguments)
+            presenter.init(it)
         }
     }
 
@@ -62,8 +64,7 @@ class RestResponseFragment : LifecycleFragment(), ResponseContract.View {
 
 
         fun newInstance(): Fragment {
-            val fragment = RestResponseFragment()
-            return fragment
+            return RestResponseFragment()
         }
     }
 

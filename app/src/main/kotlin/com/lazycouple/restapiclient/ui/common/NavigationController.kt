@@ -24,20 +24,20 @@ class NavigationController(mainActivity: MainActivity) {
     fun navigateToRequestMain() = navigateToRequestMain(null)
 
     fun navigateToRequestMain(id: String?) {
-        val mainFragment = RequestMainFragment()
-        id?.let { mainFragment.setId(id) }
-        switchFragment(mainFragment)
+        switchFragment(RequestMainFragment().apply {
+            id?.let { setId(id) }
+        })
     }
 
     fun navigateToHistory() {
-        val historyFragment = RequestHistoryFragment()
-        switchFragment(historyFragment)
+        switchFragment(RequestHistoryFragment())
     }
 
     private fun switchFragment(fragment: Fragment) {
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(containerId, fragment)
-        fragmentTransaction.commit()
+        fragmentManager.beginTransaction().apply {
+            replace(containerId, fragment)
+            commit()
+        }
     }
 
 }

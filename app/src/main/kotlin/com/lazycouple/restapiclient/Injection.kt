@@ -9,10 +9,6 @@ import io.realm.RealmConfiguration
 import java.nio.ByteBuffer
 
 
-/**
- * Created by amuyu on 2017. 6. 13..
- */
-
 object Injection {
 
     fun provideRestRepository(context: Context): RestRepository {
@@ -22,11 +18,13 @@ object Injection {
     fun provideRealmConfiguration(context: Context): RealmConfiguration {
         val name = "restapi.realm"
         val id = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
-        val buffer = ByteBuffer.allocate(64)
-        buffer.put(EncryptionUtils.sha256(id.toByteArray()))
-        buffer.put(EncryptionUtils.sha256(("TCallSyncRealmKey:" + name).toByteArray()))
+        val encryptionBuffer = ByteBuffer.allocate(64).apply {
+            put(EncryptionUtils.sha256(id.toByteArray()))
+            put(EncryptionUtils.sha256(("TCallSyncRealmKey:" + name).toByteArray()))
+        }
+
         return RealmConfiguration.Builder()
-                //                .encryptionKey(buffer.array())    // 암호화
+                //                .encryptionKey(encryptionBuffer.array())    // 암호화
                 .name(name)
                 .schemaVersion(1)
                 .deleteRealmIfMigrationNeeded()

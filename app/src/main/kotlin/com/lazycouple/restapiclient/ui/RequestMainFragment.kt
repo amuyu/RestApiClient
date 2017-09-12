@@ -22,7 +22,9 @@ class RequestMainFragment : BaseFragment() {
     private val TAG = RequestMainFragment::class.java.simpleName
 
     internal lateinit var binding: RequestMainRBinding
-    private lateinit var tabsAdapter: TabsAdapter
+    private val tabsAdapter: TabsAdapter by lazy  {
+        TabsAdapter(fragmentManager)
+    }
 
     internal var id: String? = null
 
@@ -38,29 +40,30 @@ class RequestMainFragment : BaseFragment() {
         initTabLayout(true)
         binding = RequestMainRBinding.inflate(inflater, container, false)
 
-        val tabLayout = tabLayout
+
         tabLayout?.apply {
-            tabLayout.addTab(tabLayout.newTab().setText("Request"))
-            tabLayout.addTab(tabLayout.newTab().setText("Response"))
+            addTab(newTab().setText("Request"))
+            addTab(newTab().setText("Response"))
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    binding.viewPager.currentItem = tab.position
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab) {
+
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab) {
+
+                }
+            })
         }
 
 
-        tabsAdapter = TabsAdapter(fragmentManager)
+
         binding.viewPager.adapter = tabsAdapter
         binding.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
-        tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                binding.viewPager.currentItem = tab.position
-            }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
-        })
 
         return binding.root
     }
@@ -77,14 +80,17 @@ class RequestMainFragment : BaseFragment() {
     }
 
     fun setId(id: String) {
+        Logger.d("");
         this.id = id
     }
 
     fun showResponse(response: CustomResponse?) {
         Logger.d("")
-        tabsAdapter.setCustomResponse(response)
-        binding.viewPager.currentItem = 1
-        tabsAdapter.notifyDataSetChanged()
+        tabsAdapter.run {
+            binding.viewPager.currentItem = 1
+            setCustomResponse(response)
+            notifyDataSetChanged()
+        }
     }
 
 
@@ -102,11 +108,10 @@ class RequestMainFragment : BaseFragment() {
 
         override fun getItem(position: Int): Fragment {
             if (position == 0) {
-                val fragment = RestRequestFragment.newInstance()
-                return fragment
+                return RestRequestFragment.newInstance()
             } else {
                 val fragment = RestResponseFragment.newInstance()
-                if (customResponse != null) {
+                customResponse?.run {
                     val bundle = Bundle()
                     bundle.putParcelable(RestResponseFragment.KEY, customResponse)
                     fragment.arguments = bundle

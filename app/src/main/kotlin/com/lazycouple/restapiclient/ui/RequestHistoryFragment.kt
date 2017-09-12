@@ -28,8 +28,8 @@ class RequestHistoryFragment : BaseFragment(), RequestHistoryContract.View {
     @Inject lateinit var requestHistoryPresenter: RequestHistoryPresenter
 
 
-    private var binding: HistoryMainBinding? = null
-    private var historyAdapter: ReqHistoryAdapter? = null
+    lateinit var binding: HistoryMainBinding
+    lateinit var historyAdapter: ReqHistoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,11 +46,12 @@ class RequestHistoryFragment : BaseFragment(), RequestHistoryContract.View {
         super.onActivityCreated(savedInstanceState)
 
         historyAdapter = ReqHistoryAdapter(activity,
-                requestHistoryPresenter.viewModel, requestHistoryPresenter as RequestHistoryContract.Presenter)
-        binding!!.rvHistoryList.layoutManager = LinearLayoutManager(activity)
-        binding!!.rvHistoryList.adapter = historyAdapter
-
-        binding!!.srHistoryRefresh.setOnRefreshListener {
+                                            requestHistoryPresenter.viewModel,
+                                            requestHistoryPresenter as RequestHistoryContract.Presenter).apply {
+                            binding.rvHistoryList.adapter = this
+                        }
+        binding.rvHistoryList.layoutManager = LinearLayoutManager(activity)
+        binding.srHistoryRefresh.setOnRefreshListener {
             // refresh event
             Logger.d("refresh event")
             requestHistoryPresenter.loadList()
@@ -63,33 +64,35 @@ class RequestHistoryFragment : BaseFragment(), RequestHistoryContract.View {
         initTabLayout(false)
         setHasOptionsMenu(true)
         binding = HistoryMainBinding.inflate(inflater, container, false)
-        return binding?.root
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater!!.inflate(R.menu.history_menu, menu)
+        inflater?.inflate(R.menu.history_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-        val id = item!!.itemId
-        if (id == R.id.action_remove) {
-            Logger.d("")
-            requestHistoryPresenter.clearItems()
-            return true
+        val id = item?.itemId
+        when (id) {
+            R.id.action_remove -> {
+                Logger.d("")
+                requestHistoryPresenter.clearItems()
+                return true
+            }
         }
-
-
         return super.onOptionsItemSelected(item)
     }
 
     override fun showList() {
-        historyAdapter?.notifyDataSetChanged()
+        historyAdapter.notifyDataSetChanged()
     }
 
     override fun showRestRequset(id: String?) {
-        if (id != null) (activity as MainActivity).loadRequestFragment(id)
+        id?.let {
+            (activity as MainActivity).loadRequestFragment(id)
+        }
     }
 
     override fun onDestroy() {

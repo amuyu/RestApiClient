@@ -11,43 +11,50 @@ import android.view.Menu
 import android.view.MenuItem
 import com.amuyu.logger.Logger
 import com.lazycouple.restapiclient.databinding.ActivityMainBinding
+import com.lazycouple.restapiclient.ui.RequestMainFragment
 import com.lazycouple.restapiclient.ui.RestRequestFragment
+import com.lazycouple.restapiclient.ui.RestResponseFragment
 import com.lazycouple.restapiclient.ui.common.NavigationController
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val TAG = MainActivity::class.java.simpleName
-    private var binding: ActivityMainBinding? = null
-    lateinit var navigationController: NavigationController
+    private val binding: ActivityMainBinding by lazy {
+        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+    }
+    private val navigationController: NavigationController by lazy {
+        NavigationController(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Logger.d("navigation2")
-        navigationController = NavigationController(this)
 
-        binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-        setSupportActionBar(binding!!.appBar.toolbar)
-
-        binding!!.appBar.fab.setOnClickListener { view ->
+        setSupportActionBar(binding.appBar.toolbar)
+        binding.appBar.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
 
 
-        val toggle = ActionBarDrawerToggle(
-                this, binding!!.drawerLayout, binding!!.appBar.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        binding!!.drawerLayout.setDrawerListener(toggle)
-        toggle.syncState()
+        ActionBarDrawerToggle(
+                this, binding.drawerLayout, binding.appBar.toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close)?.let {
+            binding.drawerLayout.setDrawerListener(it)
+            it.syncState()
+        }
 
-        binding!!.navView.setNavigationItemSelectedListener(this)
+
+
+        binding.navView.setNavigationItemSelectedListener(this)
 
         if (savedInstanceState == null)
             selectItem(R.id.nav_request)
     }
 
     override fun onBackPressed() {
-        if (binding!!.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            binding!!.drawerLayout.closeDrawer(GravityCompat.START)
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             if (processBackPressed())
                 super.onBackPressed()
@@ -55,11 +62,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun processBackPressed(): Boolean {
-        val fragmentManager = supportFragmentManager
-        val fragment = fragmentManager.findFragmentById(R.id.content_frame)
-
-        if (fragment is RestRequestFragment) {
-            return fragment.onBackPressed()
+        val fragment = supportFragmentManager.findFragmentById(R.id.content_frame)
+        Logger.d("empty:" +fragment)
+        when(fragment) {
+            is RestRequestFragment -> {
+                Logger.d("")
+                fragment.onBackPressed()
+            }
+            is RestResponseFragment -> {
+                Logger.d("")
+                return true
+            }
+            is RequestMainFragment -> {
+                Logger.d("")
+                (fragment as RequestMainFragment).onBackPressed()
+                return true
+            }
         }
 
         return true
@@ -88,7 +106,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         selectItem(item.itemId)
-        binding!!.drawerLayout.closeDrawer(GravityCompat.START)
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
