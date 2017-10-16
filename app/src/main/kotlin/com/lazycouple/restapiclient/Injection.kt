@@ -2,6 +2,7 @@ package com.lazycouple.restapiclient
 
 import android.content.Context
 import android.provider.Settings
+import com.amuyu.testrestapi.network.DataManagerImpl
 import com.lazycouple.restapiclient.repository.RestRepository
 import com.lazycouple.restapiclient.repository.local.RestLocalDataSource
 import com.lazycouple.restapiclient.util.EncryptionUtils
@@ -12,7 +13,7 @@ import java.nio.ByteBuffer
 object Injection {
 
     fun provideRestRepository(context: Context): RestRepository {
-        return RestRepository.getInstance(RestLocalDataSource.getInstance(context))
+        return RestRepository.getInstance(RestLocalDataSource.getInstance(context), DataManagerImpl())
     }
 
     fun provideRealmConfiguration(context: Context): RealmConfiguration {

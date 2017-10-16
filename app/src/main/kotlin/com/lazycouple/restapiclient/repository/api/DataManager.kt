@@ -12,5 +12,4 @@ interface DataManager {
 
     fun callApi(url: String, parameter: Map<String, String>, headerMap: Map<String, String>): Observable<Response<ResponseBody>>?
     fun callApiPost(url: String, body: RequestBody, headerMap: Map<String, String>): Observable<Response<ResponseBody>>?
-    fun loadList(): List<String>?
 }

@@ -25,7 +25,4 @@ class DataManagerImpl : DataManager {
         return apiManager?.callApiPost(url, body, headerMap)
     }
 
-    override fun loadList(): List<String>? {
-        return null
-    }
 }

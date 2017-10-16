@@ -2,8 +2,6 @@ package com.lazycouple.restapiclient.ui.presenter
 
 import android.content.Context
 import com.amuyu.logger.Logger
-import com.amuyu.testrestapi.network.DataManager
-import com.amuyu.testrestapi.network.DataManagerImpl
 import com.lazycouple.restapiclient.repository.RestRepository
 import com.lazycouple.restapiclient.repository.local.model.Parameter
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract
@@ -27,7 +25,7 @@ import javax.inject.Inject
 class RestRequestPresenter @Inject
 constructor(private val context: Context, private val view: RestRequestContract.View,
             val viewModel: RestRequestViewModel, private val repository: RestRepository) : RestRequestContract.Presenter {
-    private val dataManager: DataManager
+
     private val realm: Realm
 
     enum class Method private constructor(var value: Int) {
@@ -49,7 +47,6 @@ constructor(private val context: Context, private val view: RestRequestContract.
 
 
     init {
-        this.dataManager = DataManagerImpl()
         realm = Realm.getDefaultInstance()
     }
 
@@ -144,7 +141,7 @@ constructor(private val context: Context, private val view: RestRequestContract.
     }
 
     private fun requestGet(url: String, map: Map<String, String>, headerMap: Map<String, String>) {
-        dataManager.callApi(url, map, headerMap)!!
+        repository.callApi(url, map, headerMap)!!
                 .subscribe(object : Subscriber<Response<ResponseBody>>() {
                     override fun onCompleted() {
 
@@ -190,7 +187,7 @@ constructor(private val context: Context, private val view: RestRequestContract.
 
     private fun requestPost(url: String, body: RequestBody?, headerMap: Map<String, String>) {
         if(body != null) {
-            dataManager.callApiPost(url, body, headerMap)!!
+            repository.callApiPost(url, body, headerMap)!!
                     .subscribe(object : Subscriber<Response<ResponseBody>>() {
                         override fun onCompleted() {
 
