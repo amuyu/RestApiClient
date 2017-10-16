@@ -8,7 +8,7 @@ import android.view.ViewGroup
 
 import com.android.databinding.library.baseAdapters.BR
 import com.lazycouple.restapiclient.databinding.ReqHistoryRowBinding
-import com.lazycouple.restapiclient.db.model.Api
+import com.lazycouple.restapiclient.repository.local.model.Api
 import com.lazycouple.restapiclient.ui.contract.RequestHistoryContract.Presenter
 import com.lazycouple.restapiclient.ui.viewModel.RequestHistoryViewModel
 import com.lazycouple.restapiclient.util.BindingHolder

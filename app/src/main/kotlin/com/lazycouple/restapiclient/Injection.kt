@@ -2,8 +2,8 @@ package com.lazycouple.restapiclient
 
 import android.content.Context
 import android.provider.Settings
-import com.lazycouple.restapiclient.data.RestRepository
-import com.lazycouple.restapiclient.data.local.RestLocalDataSource
+import com.lazycouple.restapiclient.repository.RestRepository
+import com.lazycouple.restapiclient.repository.local.RestLocalDataSource
 import com.lazycouple.restapiclient.util.EncryptionUtils
 import io.realm.RealmConfiguration
 import java.nio.ByteBuffer

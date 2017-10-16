@@ -1,4 +1,4 @@
-package com.lazycouple.restapiclient.data
+package com.lazycouple.restapiclient.repository
 
 
 import com.lazycouple.restapiclient.Injection

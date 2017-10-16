@@ -3,7 +3,7 @@ package com.lazycouple.restapiclient.ui.module
 import android.content.Context
 
 import com.lazycouple.restapiclient.Injection
-import com.lazycouple.restapiclient.data.RestRepository
+import com.lazycouple.restapiclient.repository.RestRepository
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract
 import com.lazycouple.restapiclient.ui.viewModel.RestRequestViewModel
 

@@ -1,4 +1,4 @@
-package com.lazycouple.restapiclient.db.model
+package com.lazycouple.restapiclient.repository.local.model
 
 import io.realm.RealmObject
 

@@ -1,7 +1,7 @@
-package com.lazycouple.restapiclient.data
+package com.lazycouple.restapiclient.repository
 
-import com.lazycouple.restapiclient.db.model.Api
-import com.lazycouple.restapiclient.db.model.Parameter
+import com.lazycouple.restapiclient.repository.local.model.Api
+import com.lazycouple.restapiclient.repository.local.model.Parameter
 import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter
 
 import io.realm.Realm

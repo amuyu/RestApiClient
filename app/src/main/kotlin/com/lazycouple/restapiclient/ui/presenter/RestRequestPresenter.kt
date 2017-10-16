@@ -4,8 +4,8 @@ import android.content.Context
 import com.amuyu.logger.Logger
 import com.amuyu.testrestapi.network.DataManager
 import com.amuyu.testrestapi.network.DataManagerImpl
-import com.lazycouple.restapiclient.data.RestRepository
-import com.lazycouple.restapiclient.db.model.Parameter
+import com.lazycouple.restapiclient.repository.RestRepository
+import com.lazycouple.restapiclient.repository.local.model.Parameter
 import com.lazycouple.restapiclient.ui.contract.RestRequestContract
 import com.lazycouple.restapiclient.ui.data.CustomResponse
 import com.lazycouple.restapiclient.ui.viewModel.RestRequestViewModel

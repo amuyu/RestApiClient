@@ -3,7 +3,7 @@ package com.lazycouple.restapiclient.util
 import android.content.Context
 
 import com.lazycouple.restapiclient.R
-import com.lazycouple.restapiclient.db.model.Parameter
+import com.lazycouple.restapiclient.repository.local.model.Parameter
 
 import java.util.ArrayList
 import java.util.Arrays

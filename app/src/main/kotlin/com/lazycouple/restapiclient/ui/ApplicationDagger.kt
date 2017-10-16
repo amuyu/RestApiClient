@@ -1,6 +1,6 @@
 package com.lazycouple.restapiclient.ui
 
-import com.lazycouple.restapiclient.data.RepositoryModule
+import com.lazycouple.restapiclient.repository.RepositoryModule
 import com.lazycouple.restapiclient.deligate.MyApplication
 import com.lazycouple.restapiclient.ui.component.RequestHistoryComponent
 import com.lazycouple.restapiclient.ui.component.RestRequestComponent

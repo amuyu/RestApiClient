@@ -1,6 +1,6 @@
 package com.lazycouple.restapiclient.ui.contract
 
-import com.lazycouple.restapiclient.db.model.Parameter
+import com.lazycouple.restapiclient.repository.local.model.Parameter
 import com.lazycouple.restapiclient.ui.data.CustomResponse
 import com.lazycouple.restapiclient.ui.presenter.BasePresenter
 import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter

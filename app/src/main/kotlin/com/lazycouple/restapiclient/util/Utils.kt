@@ -1,7 +1,7 @@
 package com.lazycouple.restapiclient.util
 
 import android.net.Uri
-import com.lazycouple.restapiclient.db.model.Parameter
+import com.lazycouple.restapiclient.repository.local.model.Parameter
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import org.json.JSONException

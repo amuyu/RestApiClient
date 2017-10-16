@@ -2,7 +2,7 @@ package com.lazycouple.restapiclient.ui.presenter
 
 import android.content.Context
 import com.amuyu.logger.Logger
-import com.lazycouple.restapiclient.data.RestRepository
+import com.lazycouple.restapiclient.repository.RestRepository
 import com.lazycouple.restapiclient.ui.contract.RequestHistoryContract
 import com.lazycouple.restapiclient.ui.viewModel.RequestHistoryViewModel
 import io.realm.Realm

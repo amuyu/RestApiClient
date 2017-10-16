@@ -1,9 +1,9 @@
-package com.lazycouple.restapiclient.data.local
+package com.lazycouple.restapiclient.repository.local
 
 import android.content.Context
-import com.lazycouple.restapiclient.data.DataSource
-import com.lazycouple.restapiclient.db.model.Api
-import com.lazycouple.restapiclient.db.model.Parameter
+import com.lazycouple.restapiclient.repository.DataSource
+import com.lazycouple.restapiclient.repository.local.model.Api
+import com.lazycouple.restapiclient.repository.local.model.Parameter
 import com.lazycouple.restapiclient.ui.presenter.RestRequestPresenter
 import io.realm.Realm
 import rx.Observable
